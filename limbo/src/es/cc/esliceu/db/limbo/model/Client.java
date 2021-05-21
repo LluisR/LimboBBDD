@@ -12,7 +12,7 @@ public class Client {
     private String cognom2;
     private String username;
     private String contrasenya;
-    private Cistella cistella;
+    private Compra compra;
     private Collection<Targeta> targetes;
     private Collection<Adreca> adreces;
     private Collection<Compra> compres;
@@ -80,12 +80,12 @@ public class Client {
         this.contrasenya = contrasenya;
     }
 
-    public Cistella getCistella() {
-        return cistella;
+    public Compra getCompra() {
+        return compra;
     }
 
-    public void setCistella(Cistella cistella) {
-        this.cistella = cistella;
+    public void setCompra(Compra cistella) {
+        this.compra = cistella;
     }
 
     public Collection<Targeta> getTargetes() {
@@ -117,12 +117,12 @@ public class Client {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Client client = (Client) o;
-        return Objects.equals(numero_client, client.numero_client) && Objects.equals(email, client.email) && Objects.equals(nom, client.nom) && Objects.equals(cognom1, client.cognom1) && Objects.equals(cognom2, client.cognom2) && Objects.equals(username, client.username) && Objects.equals(contrasenya, client.contrasenya) && Objects.equals(cistella, client.cistella) && Objects.equals(targetes, client.targetes) && Objects.equals(adreces, client.adreces) && Objects.equals(compres, client.compres);
+        return Objects.equals(numero_client, client.numero_client) && Objects.equals(email, client.email) && Objects.equals(nom, client.nom) && Objects.equals(cognom1, client.cognom1) && Objects.equals(cognom2, client.cognom2) && Objects.equals(username, client.username) && Objects.equals(contrasenya, client.contrasenya) && Objects.equals(compra, client.compra) && Objects.equals(targetes, client.targetes) && Objects.equals(adreces, client.adreces) && Objects.equals(compres, client.compres);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(numero_client, email, nom, cognom1, cognom2, username, contrasenya, cistella, targetes, adreces, compres);
+        return Objects.hash(numero_client, email, nom, cognom1, cognom2, username, contrasenya, compra, targetes, adreces, compres);
     }
 
     @Override
@@ -135,7 +135,7 @@ public class Client {
                 ", cognom2='" + cognom2 + '\'' +
                 ", username='" + username + '\'' +
                 ", contrasenya='" + contrasenya + '\'' +
-                ", cistella=" + cistella +
+                ", compra=" + compra +
                 ", targetes=" + targetes +
                 ", adreces=" + adreces +
                 ", compres=" + compres +

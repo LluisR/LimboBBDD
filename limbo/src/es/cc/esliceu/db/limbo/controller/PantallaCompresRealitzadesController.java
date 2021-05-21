@@ -7,10 +7,7 @@ import es.cc.esliceu.db.limbo.dao.impl.CompraDaoImpl;
 import es.cc.esliceu.db.limbo.dao.impl.DBConnectionImpl;
 import es.cc.esliceu.db.limbo.dao.impl.DetallCompraDaoImpl;
 import es.cc.esliceu.db.limbo.dao.impl.ProducteDaoImpl;
-import es.cc.esliceu.db.limbo.model.Cistella;
-import es.cc.esliceu.db.limbo.model.Client;
-import es.cc.esliceu.db.limbo.model.Compra;
-import es.cc.esliceu.db.limbo.model.DetallCompra;
+import es.cc.esliceu.db.limbo.model.*;
 import es.cc.esliceu.db.limbo.views.PantallaCompresRealitzadesView;
 
 import java.util.Collection;
@@ -31,21 +28,15 @@ public class PantallaCompresRealitzadesController {
 
     public void init(Client client) {
         PantallaCompresRealitzadesView pantallaCompresRealitzadesView = new PantallaCompresRealitzadesView();
-        Map<Cistella, Compra> historialCompres = new HashMap<>();
-        Collection<Compra> compres = this.compraDao.findByIdClient(client);
-        compres.forEach(compra -> {
-            Cistella cistella = new Cistella();
-            Collection<DetallCompra> productes = this.detallCompraDao.findByIdCompra(compra);
-            productes.forEach(producte -> {
-                producte.setProducte(this.producteDao.findById(producte.getProducte().getId()));
+        client.setCompres(this.compraDao.findByIdClient(client));
+        client.getCompres().forEach(compra -> {
+            Collection<DetallCompra> detallsCompra = this.detallCompraDao.findByIdCompra(compra);
+            detallsCompra.forEach(detallCompra -> {
+                detallCompra.setProducte(this.producteDao.findById(detallCompra.getProducte().getId()));
             });
-            cistella.setProductes(productes);
-            /*cistella.calculaTotal();*/
-            historialCompres.put(cistella, compra);
+            compra.setProductes(detallsCompra);
         });
-        /*client.setCompres(this.compraDao.findByIdClient(client));*/
-
-        pantallaCompresRealitzadesView.init(client, historialCompres);
+        pantallaCompresRealitzadesView.init(client);
     }
 
     public void goBack(Client client) {

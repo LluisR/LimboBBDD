@@ -11,5 +11,6 @@ public interface TargetaDao {
     Collection<Targeta> findAll();
     void save(Targeta targeta);
     void update(Targeta targeta);
+    void delete(Targeta targeta);
     Collection<Targeta> findByIdClient(Client client);
 }

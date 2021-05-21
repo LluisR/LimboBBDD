@@ -68,8 +68,8 @@ public class PantallaCercaProductesController {
 
     public void addToCistella(Client client, Producte producte, Integer unitats) {
 
-        DetallCompra detallCompra = client.getCistella().getProductes().stream()
-                .filter(prod -> producte.getId().equals(prod.getProducte().getId()))
+        DetallCompra detallCompra = client.getCompra().getProductes().stream()
+                .filter(prod -> producte.getNom().equals(prod.getProducte().getNom()))
                 .findAny()
                 .orElse(null);
 
@@ -78,8 +78,9 @@ public class PantallaCercaProductesController {
             DetallCompra newDetallCompra = new DetallCompra();
             newDetallCompra.setProducte(producte);
             newDetallCompra.setUnitats_producte(unitats);
-            client.getCistella().getProductes().add(newDetallCompra);
-            client.getCistella().calculaTotal();
+            Collection<DetallCompra> detalls = client.getCompra().getProductes();
+            detalls.add(newDetallCompra);
+            client.getCompra().setProductes(detalls);
         }
     }
 

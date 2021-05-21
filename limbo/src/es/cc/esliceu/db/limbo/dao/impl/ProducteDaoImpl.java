@@ -39,7 +39,7 @@ public class ProducteDaoImpl implements ProducteDao {
                 producte.setNom(rs.getString("nom"));
                 producte.setDescripcio(rs.getString("descripcio"));
                 producte.setPvp(rs.getDouble("pvp"));
-                producte.setPvp(rs.getDouble("pes"));
+                producte.setPes(rs.getDouble("pes"));
                 producte.setIva(rs.getInt("iva"));
                 producte.setMarca(rs.getString("marca"));
                 producte.setUnitat_mesura(rs.getString("unitat_mesura"));

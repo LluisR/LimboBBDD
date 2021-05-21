@@ -28,7 +28,7 @@ public class PantallaInicialView {
         while (!option.equals("1") && !option.equals("2") && !option.equals("h") && !option.equals("x")) {
             Notifications.errada("L'opció escollida no està disponible. Torna a intentar-ho");
             System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "\t" + "Esculli una opció:" + Color.RESET + " ");
-            option = scanner.nextLine();
+            option = scanner.nextLine().toLowerCase();
         }
         controller.nextPage(option);
     }

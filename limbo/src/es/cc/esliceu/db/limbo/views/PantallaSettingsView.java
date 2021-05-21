@@ -7,6 +7,7 @@ import es.cc.esliceu.db.limbo.model.Client;
 import es.cc.esliceu.db.limbo.util.Color;
 import es.cc.esliceu.db.limbo.util.Notifications;
 
+import java.util.Locale;
 import java.util.Scanner;
 
 public class PantallaSettingsView {
@@ -27,7 +28,12 @@ public class PantallaSettingsView {
         System.out.println(Color.BLUE + "x) Sortir" + Color.RESET);
         System.out.print(Color.YELLOW_BACKGROUND + "Esculli una opció: " + Color.RESET);
         Scanner scanner = new Scanner(System.in);
-        String option = scanner.nextLine();
+        String option = scanner.nextLine().toLowerCase();
+        while (!option.equals("a") && !option.equals("b") && !option.equals("x")) {
+            Notifications.errada("La opció escollida no es vàlida. Torna a intentar-ho");
+            System.out.print(Color.YELLOW_BACKGROUND + "Esculli una opció: " + Color.RESET);
+            option = scanner.nextLine().toLowerCase();
+        }
         this.controller.nextAction(client, option);
     }
 

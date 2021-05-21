@@ -17,9 +17,9 @@ public class PantallaCreateAdrecaController {
         this.adrecaDao = new AdrecaDaoImpl(DBConnectionImpl.getInstance());
     }
 
-    public void init(Client client, String from, Targeta targeta) {
+    public void init(Client client, String from) {
         PantallaCreateAdrecaView pantallaCreateAdrecaView = new PantallaCreateAdrecaView();
-        pantallaCreateAdrecaView.init(client, from, targeta);
+        pantallaCreateAdrecaView.init(client, from);
     }
 
     public void saveNewAdreca(Client client, String carrer, String numero, Integer pis, String porta, String cp) {
@@ -37,11 +37,11 @@ public class PantallaCreateAdrecaController {
         this.adrecaDao.save(adreca);
     }
 
-    public void nextAction(Client client, String from, Targeta targeta) {
+    public void nextAction(Client client, String from) {
         if (from.equals("settings")) {
             PantallaSettingsController pantallaSettingsController = new PantallaSettingsController(); pantallaSettingsController.init(client);
         } else if (from.equals("enviament")) {
-            PantallaEnviamentController pantallaEnviamentController = new PantallaEnviamentController(); pantallaEnviamentController.init(client, targeta);
+            PantallaEnviamentController pantallaEnviamentController = new PantallaEnviamentController(); pantallaEnviamentController.init(client);
         }
     }
 }

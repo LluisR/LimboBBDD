@@ -3,8 +3,8 @@ package es.cc.esliceu.db.limbo.controller;
 import es.cc.esliceu.db.limbo.dao.ProducteDao;
 import es.cc.esliceu.db.limbo.dao.impl.DBConnectionImpl;
 import es.cc.esliceu.db.limbo.dao.impl.ProducteDaoImpl;
-import es.cc.esliceu.db.limbo.model.Cistella;
 import es.cc.esliceu.db.limbo.model.Client;
+import es.cc.esliceu.db.limbo.model.Compra;
 import es.cc.esliceu.db.limbo.model.Producte;
 import es.cc.esliceu.db.limbo.views.PantallaPrincipalView;
 
@@ -20,9 +20,10 @@ public class PantallaPrincipalController {
 
     public void init(Client client) {
         PantallaPrincipalView pantallaPrincipalView = new PantallaPrincipalView();
-        if (client.getCistella() == null) {
-            Cistella cistella = new Cistella();
-            client.setCistella(cistella);
+        if (client.getCompra() == null) {
+            Compra compra = new Compra();
+            compra.setClient(client);
+            client.setCompra(compra);
         }
         Collection<Producte> suggestedProducts = this.getProductesSuggerits();
         pantallaPrincipalView.init(client, suggestedProducts);

@@ -69,6 +69,29 @@ public class AdrecaDaoImpl implements AdrecaDao {
     }
 
     @Override
+    public void delete(Adreca adreca) {
+        String sql = "delete from adreca where id=?";
+        PreparedStatement preparedStatement = null;
+
+        try {
+            preparedStatement = this.connection.getConnection().prepareStatement(sql);
+            preparedStatement.setInt(1,adreca.getId());
+            preparedStatement.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
     public Collection<Adreca> findAllByIdClient(Client client) {
         String sql = "select * from adreca where client_id = ?";
         PreparedStatement preparedStatement = null;

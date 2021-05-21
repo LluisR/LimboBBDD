@@ -18,11 +18,11 @@ public class PantallaCistellaController {
 
     public void dropProduct(Client client, DetallCompra producte, String unitats) {
         if (unitats.length() == 0 || producte.getUnitats_producte() <= Integer.parseInt(unitats)) {
-            client.getCistella().getProductes().remove(producte);
+            client.getCompra().getProductes().remove(producte);
         } else {
             producte.setUnitats_producte(producte.getUnitats_producte()-Integer.parseInt(unitats));
         }
-        client.getCistella().calculaTotal();
+        /*client.getCompra().calculaTotal();*/
         PantallaCistellaView pantallaCistellaView = new PantallaCistellaView();
         pantallaCistellaView.init(client);
     }

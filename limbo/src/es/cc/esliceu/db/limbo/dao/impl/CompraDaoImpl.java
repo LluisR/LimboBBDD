@@ -79,6 +79,54 @@ public class CompraDaoImpl implements CompraDao {
     }
 
     @Override
+    public void updateByTargeta(Targeta targeta) {
+        String sql = "update compra set targeta_id=null where targeta_id=?;";
+        PreparedStatement preparedStatement = null;
+
+        try {
+            preparedStatement = this.connection.getConnection().prepareStatement(sql);
+            preparedStatement.setInt(1,targeta.getId());
+            preparedStatement.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    @Override
+    public void updateByAdress(Adreca adreca) {
+        String sql = "update compra set adreca_id=null where adreca_id=?;";
+        PreparedStatement preparedStatement = null;
+
+        try {
+            preparedStatement = this.connection.getConnection().prepareStatement(sql);
+            preparedStatement.setInt(1,adreca.getId());
+            preparedStatement.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    @Override
     public Collection<Compra> findByIdClient(Client client) {
         String sql = "select * from compra where client_id = ?";
         PreparedStatement preparedStatement = null;

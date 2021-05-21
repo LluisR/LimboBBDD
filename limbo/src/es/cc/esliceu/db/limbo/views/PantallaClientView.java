@@ -3,6 +3,7 @@ package es.cc.esliceu.db.limbo.views;
 import es.cc.esliceu.db.limbo.controller.PantallaClientController;
 import es.cc.esliceu.db.limbo.model.Client;
 import es.cc.esliceu.db.limbo.util.Color;
+import es.cc.esliceu.db.limbo.util.Notifications;
 
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -27,7 +28,12 @@ public class PantallaClientView {
         System.out.println(Color.BLUE + "x) Sortir" + Color.RESET);
         System.out.print(Color.YELLOW_BACKGROUND + "Esculli una opció: " + Color.RESET);
         Scanner scanner = new Scanner(System.in);
-        String option = scanner.nextLine();
+        String option = scanner.nextLine().toLowerCase();
+        while (!option.equals("d") && !option.equals("c") && !option.equals("a") && !option.equals("t") && !option.equals("x")) {
+            Notifications.errada("La opció escollida no es vàlida. Per favor, torna a intentar-ho");
+            System.out.print(Color.YELLOW_BACKGROUND + "Esculli una opció: " + Color.RESET);
+            option = scanner.nextLine().toLowerCase();
+        }
         this.controller.nextAction(client, option);
     }
 
@@ -40,6 +46,7 @@ public class PantallaClientView {
         if (client.getAdreces() != null) {
             client.getAdreces().forEach(adreca -> {
                 System.out.println(Color.YELLOW_BRIGHT + "" + idx.get() + Color.CYAN_BRIGHT + "   " + adreca.getCarrer() + " " + adreca.getNumero() + " " + adreca.getCp() + Color.RESET);
+                idx.set(idx.get()+1);
             });
         } else {
             System.out.println(Color.YELLOW_BRIGHT + "No s'ha trobat cap adreça registrada al sistema." + Color.RESET);
@@ -47,10 +54,29 @@ public class PantallaClientView {
         if (client.getAdreces().size() < 3) {
             System.out.println("a) Afegir adreça d'enviament");
         }
+        if (client.getAdreces().size() > 0) {
+            System.out.println("b) Esborrar Adreça");
+        }
         System.out.println("x) Sortir");
         System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Esculli una opció:" + Color.RESET + " ");
         Scanner scanner = new Scanner(System.in);
-        String option = scanner.nextLine();
+        String option = scanner.nextLine().toLowerCase();
+        while (!option.equals("a") && !option.equals("x") && !option.equals("b")) {
+            Notifications.errada("La opció escollida no es vàlida. Torna a intentar-ho.");
+            System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Esculli una opció:" + Color.RESET + " ");
+            option = scanner.nextLine().toLowerCase();
+        }
+        if (option.equals("b")) {
+            System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Indiqui la posició de l'adreça que vol esborrar: " + Color.RESET + " ");
+            String indexAdress = scanner.nextLine();
+            while (!indexAdress.matches("\\d*") && Integer.parseInt(indexAdress) > client.getAdreces().size()) {
+                Notifications.errada("L'index introduit no és vàlid. Torna a intentar-ho");
+                System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Indiqui la posició de l'adreça que vol esborrar: " + Color.RESET + " ");
+                indexAdress = scanner.nextLine();
+            }
+            this.controller.deleteAdress(client, Integer.parseInt(indexAdress));
+        }
+
         this.controller.nextAddressAction(client, option);
     }
 
@@ -63,6 +89,7 @@ public class PantallaClientView {
         if (client.getTargetes() != null) {
             client.getTargetes().forEach(targeta -> {
                 System.out.println(Color.YELLOW_BRIGHT + "" + idx.get() + Color.CYAN_BRIGHT + "   " + targeta.getNumero() + " " + targeta.getTipus() + " " + targeta.getData_caducitat() + Color.RESET);
+                idx.set(idx.get()+1);
             });
         } else {
             System.out.println(Color.YELLOW_BRIGHT + "No s'ha trobat cap trageta registrada al sistema." + Color.RESET);
@@ -70,10 +97,28 @@ public class PantallaClientView {
         if (client.getTargetes().size() < 3) {
             System.out.println("a) Afegir targeta");
         }
+        if (client.getTargetes().size() > 0) {
+            System.out.println("b) Esborrar targeta");
+        }
         System.out.println("x) Sortir");
         System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Esculli una opció:" + Color.RESET + " ");
         Scanner scanner = new Scanner(System.in);
-        String option = scanner.nextLine();
+        String option = scanner.nextLine().toLowerCase();
+        while (!option.equals("a") && !option.equals("x") && !option.equals("b")) {
+            Notifications.errada("La opció escollida no es vàlida. Torna a intentar-ho.");
+            System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Esculli una opció:" + Color.RESET + " ");
+            option = scanner.nextLine().toLowerCase();
+        }
+        if (option.equals("b")) {
+            System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Indiqui la posició de la targeta que vol esborrar: " + Color.RESET + " ");
+            String indexTargeta = scanner.nextLine();
+            while (!indexTargeta.matches("\\d*") && Integer.parseInt(indexTargeta) > client.getTargetes().size()) {
+                Notifications.errada("L'index introduit no es un número vàlid. Torna a intentar-ho");
+                System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Indiqui la posició de la targeta que vol esborrar: " + Color.RESET + " ");
+                indexTargeta = scanner.nextLine();
+            }
+            this.controller.deleteTargeta(client, Integer.parseInt(indexTargeta));
+        }
         this.controller.nextTargetesAction(client, option);
     }
 

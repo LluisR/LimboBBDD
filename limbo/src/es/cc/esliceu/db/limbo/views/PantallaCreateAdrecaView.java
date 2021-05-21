@@ -16,7 +16,7 @@ public class PantallaCreateAdrecaView {
         this.controller = new PantallaCreateAdrecaController();
     }
 
-    public void init(Client client, String from, Targeta targeta) {
+    public void init(Client client, String from) {
         System.out.println(Color.YELLOW_BRIGHT + "*****************************************");
         System.out.println("**              Nova Adreca             **");
         System.out.println("Usuari: " + Color.RESET + client.getNom() + " " + client.getCognom1() + "    " + Color.RED_BRIGHT + client.getUsername() + Color.RESET);
@@ -52,6 +52,6 @@ public class PantallaCreateAdrecaView {
         }
         this.controller.saveNewAdreca(client, carrer, numero, Integer.parseInt(pis), porta, cp);
         Notifications.info("Adreça afegida correctament!");
-        this.controller.nextAction(client, from, targeta);
+        this.controller.nextAction(client, from);
     }
 }

@@ -25,12 +25,12 @@ public class PantallaCistellaView {
         System.out.println("**             Cistella               **");
         System.out.println(Color.YELLOW_BRIGHT + "*****************************************" + Color.RESET);
         AtomicInteger idx = new AtomicInteger();
-        client.getCistella().getProductes().forEach((detallCompra) -> {
+        client.getCompra().getProductes().forEach((detallCompra) -> {
             System.out.println(Color.YELLOW_BRIGHT + "" + idx + Color.BLUE_BRIGHT + "   " + detallCompra.getProducte().getNom() + Color.RESET +  "  " + detallCompra.getProducte().getPvp() + "€" + "  " + detallCompra.getUnitats_producte() + " unitats");
             idx.set(idx.get() + 1);
         });
         System.out.println("-----------------------------------------");
-        System.out.println("Total Cistella: " + client.getCistella().getTotal() + " €");
+        System.out.println("Total Cistella: " + client.getCompra().getTotal() + " €");
         System.out.println("-----------------------------------------");
         System.out.println("e) Eliminar Producte");
         System.out.println("p) Pagar");
@@ -49,7 +49,7 @@ public class PantallaCistellaView {
             select = scanner.nextInt();
         }
         scanner.nextLine();
-        DetallCompra producte = (DetallCompra) client.getCistella().getProductes().toArray()[select];
+        DetallCompra producte = (DetallCompra) client.getCompra().getProductes().toArray()[select];
         System.out.println(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Quantes unitats: (<Enter> per eliminar-los tots)" + Color.RESET);
         String unitats = scanner.nextLine();
         if (!unitats.equals("")) {
@@ -58,6 +58,6 @@ public class PantallaCistellaView {
                 unitats = scanner.nextLine();
             }
         }
-        this.controller.dropProduct(client, (DetallCompra) client.getCistella().getProductes().toArray()[select], unitats);
+        this.controller.dropProduct(client, (DetallCompra) client.getCompra().getProductes().toArray()[select], unitats);
     }
 }

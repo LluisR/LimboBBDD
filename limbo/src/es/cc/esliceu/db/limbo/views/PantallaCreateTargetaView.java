@@ -1,5 +1,6 @@
 package es.cc.esliceu.db.limbo.views;
 
+import com.sun.tools.corba.se.idl.constExpr.Not;
 import es.cc.esliceu.db.limbo.controller.PantallaCreateTargetaController;
 import es.cc.esliceu.db.limbo.model.Client;
 import es.cc.esliceu.db.limbo.util.Color;
@@ -26,22 +27,36 @@ public class PantallaCreateTargetaView {
         String tipus = null;
         String numero = null;
         String dataCaducitat = null;
-        Integer codiSeguretat = null;
+        String codiSeguretat = null;
         while (option.equals("n")) {
             System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Tipus:" + Color.RESET + " ");
-            tipus = scanner.nextLine();
+            tipus = scanner.nextLine().toUpperCase();
+            while (!tipus.equals("VISA") && !tipus.equals("MASTERCARD")) {
+                Notifications.errada("Tipus de targeta incorrecte. Opcions disponibles: VISA O MASTERCARD");
+                System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Tipus (VISA/MASTERCARD):" + Color.RESET + " ");
+                tipus = scanner.nextLine().toUpperCase();
+            }
             System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Numero:" + Color.RESET + " ");
             numero = scanner.nextLine();
             while(!numero.matches("\\d*")){
-                Notifications.errada("No s'ha introduit un número vàlit. Torna a intentar-ho...");
+                Notifications.errada("No s'ha introduit un número vàlid. Torna a intentar-ho...");
                 System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Numero:" + Color.RESET + " ");
                 numero = scanner.nextLine();
             }
             System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Data de caducitat (YYYY-MM-DD):" + Color.RESET + " ");
             dataCaducitat = scanner.nextLine();
-            System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Codi de seguretat:" + Color.RESET + " ");
-            codiSeguretat = scanner.nextInt();
-            scanner.nextLine();
+            while (!dataCaducitat.matches("^\\d{4}\\-(0[1-9]|1[012])\\-(0[1-9]|[12][0-9]|3[01])$")) {
+                Notifications.errada("No s'ha introduit una data vàlida. Torna a intentar-ho... (YYYY-MM-DD)");
+                System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Data de caducitat (YYYY-MM-DD):" + Color.RESET + " ");
+                dataCaducitat = scanner.nextLine();
+            }
+            System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Codi de seguretat (3 dígits): " + Color.RESET + " ");
+            codiSeguretat = scanner.nextLine();
+            while (!codiSeguretat.matches("^\\d{3}$")) {
+                Notifications.errada("No s'ha introduit un codi vàlid. Torna a intentar-ho... (YYYY-MM-DD");
+                System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Codi de seguretat (3 dígits): " + Color.RESET + " ");
+                codiSeguretat = scanner.nextLine();
+            }
             System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "CP:" + Color.RESET + " ");
             System.out.println("--------------------------------------");
             System.out.println("Revisa les dades següents:");
@@ -53,7 +68,7 @@ public class PantallaCreateTargetaView {
             System.out.println("Es correcte? Si(s)/No(n)");
             option = scanner.nextLine();
         }
-        this.controller.saveNewTargeta(client, tipus, Long.parseLong(numero), dataCaducitat, codiSeguretat);
+        this.controller.saveNewTargeta(client, tipus, Long.parseLong(numero), dataCaducitat, Integer.parseInt(codiSeguretat));
         Notifications.info("Targeta afegida correctament!");
         this.controller.nextAction(client, from);
     }

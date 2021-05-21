@@ -5,6 +5,7 @@ import es.cc.esliceu.db.limbo.model.Categoria;
 import es.cc.esliceu.db.limbo.model.Client;
 import es.cc.esliceu.db.limbo.model.Producte;
 import es.cc.esliceu.db.limbo.util.Color;
+import es.cc.esliceu.db.limbo.util.Notifications;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -51,6 +52,17 @@ public class PantallaCercaProductesView {
             System.out.println(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "x) Enrera: " + Color.RESET);
             System.out.println(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Selecciona un producte: " + Color.RESET);
             String option = scanner.nextLine();
+            while (!option.equals("f") && !option.equals("c") && !option.equals("x")) {
+                if (!option.equals("") && option.matches("\\d*") && Integer.parseInt(option) < productes.size()) {
+                    break;
+                }
+                Notifications.errada("L'index introduir no es vàlid. Per favor, torna a intentar-ho");
+                System.out.println(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "f) Finalitzar: " + Color.RESET);
+                System.out.println(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "c) Tornar a cercar: " + Color.RESET);
+                System.out.println(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "x) Enrera: " + Color.RESET);
+                System.out.println(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Selecciona un producte: " + Color.RESET);
+                option = scanner.nextLine();
+            }
             if (option.equals("f") || option.equals("c") || option.equals("x")) {
                 this.controller.nextAction(client, option);
                 return;
@@ -78,7 +90,7 @@ public class PantallaCercaProductesView {
         System.out.println(Color.YELLOW_BRIGHT + "*****************************************");
         System.out.println("**               Cerca                 **");
         System.out.println("Usuari: " + Color.RESET + client.getNom() + " " + client.getCognom1() + "    " + Color.RED_BRIGHT + client.getUsername() + Color.RESET);
-        System.out.println(Color.BLUE + "Cistella: " + Color.RED + client.getCistella().getTotal());
+        System.out.println(Color.BLUE + "Cistella: " + Color.RED + client.getCompra().getTotal());
         System.out.println(Color.YELLOW_BRIGHT + "*****************************************" + Color.RESET);
     }
 

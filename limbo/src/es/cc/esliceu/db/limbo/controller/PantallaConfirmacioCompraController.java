@@ -22,63 +22,61 @@ public class PantallaConfirmacioCompraController {
         this.detallCompraDao = new DetallCompraDaoImpl(DBConnectionImpl.getInstance());
     }
 
-    public void init(Client client, Targeta targeta, Adreca adreca) {
+    public void init(Client client) {
         PantallaConfirmacioCompraView pantallaConfirmacioCompraView = new PantallaConfirmacioCompraView();
         client.setCompres(this.compraDao.findByIdClient(client));
-        pantallaConfirmacioCompraView.init(client, targeta, adreca);
+        pantallaConfirmacioCompraView.init(client);
     }
 
-    public void nextAction(Client client, Targeta targeta, Adreca adreca, String option) {
+    public void nextAction(Client client, String option) {
         switch (option) {
-            case "s": this.purchase(client, targeta, adreca); break;
-            case "n": PantallaEnviamentController pantallaEnviamentController = new PantallaEnviamentController(); pantallaEnviamentController.init(client, targeta); break;
+            case "s": this.purchase(client); break;
+            case "n": PantallaEnviamentController pantallaEnviamentController = new PantallaEnviamentController(); pantallaEnviamentController.init(client); break;
         }
     }
 
-    private void purchase(Client client, Targeta targeta, Adreca adreca) {
+    private void purchase(Client client) {
         Date date = new Date(System.currentTimeMillis());
         String transaccio = GeneradorHash.generaRandomString();
-        Compra compra = new Compra();
-        compra.setClient(client);
-        compra.setTargeta(targeta);
-        compra.setAdreca(adreca);
-        compra.setData(date);
-        compra.setId_transaccio(transaccio);
-        Integer idCompra = this.compraDao.save(compra);
-        compra.setId(idCompra);
-        client.getCistella().getProductes().forEach(detallCompra -> {
-            detallCompra.setCompra(compra);
+        client.getCompra().setData(date);
+        client.getCompra().setId_transaccio(transaccio);
+        Integer idCompra = this.compraDao.save(client.getCompra());
+        client.getCompra().setId(idCompra);
+        client.getCompra().getProductes().forEach(detallCompra -> {
+            detallCompra.setCompra(client.getCompra());
             detallCompra.setPvp(detallCompra.getProducte().getPvp());
             detallCompra.setPes(detallCompra.getPes());
             this.detallCompraDao.save(detallCompra);
         });
-        String resum = generaResumEmail(client, compra);
-        //EnviadorEmail.enviaEmail(client.getEmail(), "Confirmació de compra: " + compra.getId_transaccio(), resum);
-        client.setCistella(new Cistella());
+        String resum = generaResumEmail(client);
+        EnviadorEmail.enviaEmail(client.getEmail(), "Confirmació de compra: " + client.getCompra().getId_transaccio(), resum);
         PantallaConfirmacioCompraView pantallaConfirmacioCompraView = new PantallaConfirmacioCompraView();
-        pantallaConfirmacioCompraView.confirmacioCompra(client, compra);
+        pantallaConfirmacioCompraView.confirmacioCompra(client);
+        Compra newCompra = new Compra();
+        newCompra.setClient(client);
+        client.setCompra(newCompra);
     }
 
-    private String generaResumEmail(Client client, Compra compra) {
+    private String generaResumEmail(Client client) {
         StringBuilder sb = new StringBuilder();
-        sb.append("Compra " + compra.getData());
+        sb.append("Compra " + client.getCompra().getData());
         sb.append("\n");
-        sb.append("ID transacció: " + compra.getId_transaccio());
+        sb.append("ID transacció: " + client.getCompra().getId_transaccio());
         sb.append("\n");
         sb.append("Client: " + client.getNom() + " " + client.getCognom1() + " " + client.getCognom2() + " " + client.getEmail());
         sb.append("\n");
-        client.getCistella().getProductes().forEach(detallCompra -> {
+        client.getCompra().getProductes().forEach(detallCompra -> {
             sb.append(detallCompra.getProducte().getNom() + " " + detallCompra.getUnitats_producte() + " " + detallCompra.getPvp() + "€");
             sb.append("\n");
         });
-        sb.append("TOTAL: " + client.getCistella().getTotal() + "€");
+        sb.append("TOTAL: " + client.getCompra().getTotal() + "€");
         sb.append("\n");
         sb.append("Adreça d'enviament: ");
         sb.append("\n");
-        sb.append(compra.getAdreca().getCarrer() + " " + compra.getAdreca().getNumero() + " " + compra.getAdreca().getCp());
+        sb.append(client.getCompra().getAdreca().getCarrer() + " " + client.getCompra().getAdreca().getNumero() + " " + client.getCompra().getAdreca().getCp());
         sb.append("\n");
         sb.append("Targeta: ");
-        sb.append(compra.getTargeta().getNumero() +  " " + compra.getTargeta().getTipus() +  " " + compra.getTargeta().getData_caducitat());
+        sb.append(client.getCompra().getTargeta().getNumero() +  " " + client.getCompra().getTargeta().getTipus() +  " " + client.getCompra().getTargeta().getData_caducitat());
 
         return sb.toString();
     }

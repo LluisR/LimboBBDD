@@ -2,22 +2,27 @@ package es.cc.esliceu.db.limbo.controller;
 
 
 import es.cc.esliceu.db.limbo.dao.AdrecaDao;
+import es.cc.esliceu.db.limbo.dao.CompraDao;
 import es.cc.esliceu.db.limbo.dao.TargetaDao;
 import es.cc.esliceu.db.limbo.dao.impl.AdrecaDaoImpl;
+import es.cc.esliceu.db.limbo.dao.impl.CompraDaoImpl;
 import es.cc.esliceu.db.limbo.dao.impl.DBConnectionImpl;
 import es.cc.esliceu.db.limbo.dao.impl.TargetaDaoImpl;
+import es.cc.esliceu.db.limbo.model.Adreca;
 import es.cc.esliceu.db.limbo.model.Client;
+import es.cc.esliceu.db.limbo.model.Targeta;
 import es.cc.esliceu.db.limbo.views.PantallaClientView;
 
 public class PantallaClientController {
 
     private final AdrecaDao adrecaDao;
     private final TargetaDao targetaDao;
+    private final CompraDao compraDao;
 
     public PantallaClientController() {
-
         this.adrecaDao = new AdrecaDaoImpl(DBConnectionImpl.getInstance());
         this.targetaDao = new TargetaDaoImpl(DBConnectionImpl.getInstance());
+        this.compraDao = new CompraDaoImpl(DBConnectionImpl.getInstance());
     }
 
     public void init(Client client) {
@@ -41,7 +46,8 @@ public class PantallaClientController {
 
     public void nextAddressAction(Client client, String option) {
         switch (option) {
-            case "a": PantallaCreateAdrecaController pantallaCreateAdrecaController = new PantallaCreateAdrecaController(); pantallaCreateAdrecaController.init(client, "settings", null); break;
+            case "a": PantallaCreateAdrecaController pantallaCreateAdrecaController = new PantallaCreateAdrecaController(); pantallaCreateAdrecaController.init(client, "settings"); break;
+            case "b":
             case "x": this.init(client); break;
         }
     }
@@ -49,13 +55,18 @@ public class PantallaClientController {
     public void nextTargetesAction(Client client, String option) {
         switch (option) {
             case "a": PantallaCreateTargetaController pantallaCreateTargetaController = new PantallaCreateTargetaController(); pantallaCreateTargetaController.init(client, "settings"); break;
+            case "b":
             case "x": this.init(client); break;
         }
     }
 
-    public void nextCompresRealitzadesAction(Client client, String option) {
-        switch (option) {
-            case "x": this.init(client); break;
-        }
+    public void deleteTargeta(Client client, Integer indexTargeta) {
+        this.compraDao.updateByTargeta((Targeta) client.getTargetes().toArray()[indexTargeta]);
+        this.targetaDao.delete((Targeta) client.getTargetes().toArray()[indexTargeta]);
+    }
+
+    public void deleteAdress(Client client, Integer indexAdress) {
+        this.compraDao.updateByAdress((Adreca) client.getAdreces().toArray()[indexAdress]);
+        this.adrecaDao.delete((Adreca) client.getAdreces().toArray()[indexAdress]);
     }
 }

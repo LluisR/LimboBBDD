@@ -1,5 +1,7 @@
 package es.cc.esliceu.db.limbo.model;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Objects;
 
@@ -11,8 +13,12 @@ public class Compra {
     private Client client;
     private String id_transaccio;
     private Date data;
+    private Collection<DetallCompra> productes;
+    private Double total;
 
     public Compra() {
+        this.productes = new ArrayList<>();
+        this.total = 0.0;
     }
 
     public Compra(Integer id) {
@@ -65,6 +71,35 @@ public class Compra {
 
     public void setData(Date data) {
         this.data = data;
+    }
+
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
+    }
+
+    public Collection<DetallCompra> getProductes() {
+        this.calculaTotal();
+        return productes;
+    }
+
+    public void setProductes(Collection<DetallCompra> productes) {
+        this.productes = productes;
+        this.calculaTotal();
+    }
+
+    private void calculaTotal() {
+        this.total = 0.0;
+        this.productes.forEach((detallCompra) -> {
+            this.total += detallCompra.getProducte().getPvp() * detallCompra.getUnitats_producte();
+            this.total = Math.round(this.total * 100.0) / 100.0;
+            /*System.out.println("PRECIO PRODUCTO " + detallCompra.getProducte().getPvp());
+            System.out.println("UNITADES PRODUCTO " + detallCompra.getUnitats_producte());
+            System.out.println("TOTAL " + detallCompra.getProducte().getPvp() * detallCompra.getUnitats_producte());*/
+        });
     }
 
     @Override

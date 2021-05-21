@@ -11,5 +11,6 @@ public interface AdrecaDao {
     Collection<Adreca> findAll();
     void save(Adreca adreca);
     void update(Adreca adreca);
+    void delete(Adreca adreca);
     Collection<Adreca> findAllByIdClient(Client client);
 }

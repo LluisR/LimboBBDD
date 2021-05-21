@@ -79,6 +79,29 @@ public class TargetaDaoImpl implements TargetaDao {
     }
 
     @Override
+    public void delete(Targeta targeta) {
+        String sql = "delete from targeta where id=?";
+        PreparedStatement preparedStatement = null;
+
+        try {
+            preparedStatement = this.connection.getConnection().prepareStatement(sql);
+            preparedStatement.setInt(1,targeta.getId());
+            preparedStatement.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
     public Collection<Targeta> findByIdClient(Client client) {
         String sql = "select * from targeta where client_id = ?";
         PreparedStatement preparedStatement = null;

@@ -20,17 +20,17 @@ public class PantallaLoginView {
         System.out.println(Color.YELLOW_BRIGHT + "*****************************************");
         System.out.println("**                Login                **");
         System.out.println("*****************************************" + Color.RESET);
-        System.out.print(Color.YELLOW_BACKGROUND + "Username: " + Color.RESET + " ");
+        System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Username: " + Color.RESET + " ");
         String username = scanner.nextLine();
         Client client = this.controller.checkIfExistsUsername(username);
         while (client == null) {
             Notifications.errada("Error: username no existeix. Provi de vell nou");
-            System.out.println("Username:");
+            System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Username: " + Color.RESET + " ");
             username = scanner.nextLine();
             client = this.controller.checkIfExistsUsername(username);
         }
         Notifications.info("Usuari trobat al sistema");
-        System.out.print(Color.YELLOW_BACKGROUND + "Password: " + Color.RESET + " ");
+        System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Password: " + Color.RESET + " ");
         String password = scanner.nextLine();
         Integer attempts = 1;
         Integer totalAttemps = 3;
@@ -42,7 +42,7 @@ public class PantallaLoginView {
             Notifications.errada("Error: les contrasenya es incorrecte. Provi de vell nou");
             Integer attemptsLeft = totalAttemps - attempts;
             Notifications.info("Et queden " + attemptsLeft + " intents");
-            System.out.println("Contrasenya:");
+            System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Password: " + Color.RESET + " ");
             password = scanner.nextLine();
             attempts++;
         }
