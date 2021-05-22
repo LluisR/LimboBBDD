@@ -69,9 +69,13 @@ public class PantallaCercaProductesView {
             }
             Producte producte = (Producte) productes.toArray()[Integer.parseInt(option)];
             System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Unitats: " + Color.RESET);
-            Integer unitats = scanner.nextInt();
-            this.controller.addToCistella(client, producte, unitats);
-            scanner.nextLine();
+            String unitats = scanner.nextLine();
+            while (!unitats.matches("\\d*") || unitats.equals("0")) {
+                Notifications.errada("La cantidad introduida no es vàlida. Torna a intentar-ho");
+                System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Unitats: " + Color.RESET);
+                unitats = scanner.nextLine().toLowerCase();
+            }
+            this.controller.addToCistella(client, producte, Integer.parseInt(unitats));
             System.out.println(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Vols afegir més productes? : SI (s) | NO (n)" + Color.RESET);
             String more = scanner.nextLine();
             if (more.equals("n")) finished = true;
