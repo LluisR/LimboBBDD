@@ -23,7 +23,7 @@ public class PantallaLoginView {
         System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Username: " + Color.RESET + " ");
         String username = scanner.nextLine();
         Client client = this.controller.checkIfExistsUsername(username);
-        while (client == null) {
+        while (client == null || username.length() == 0) {
             Notifications.errada("Error: username no existeix. Provi de vell nou");
             System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Username: " + Color.RESET + " ");
             username = scanner.nextLine();
