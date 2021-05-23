@@ -24,17 +24,20 @@ public class PantallaCreateTargetaView {
         System.out.println(Color.YELLOW_BRIGHT + "*****************************************" + Color.RESET);
         Scanner scanner = new Scanner(System.in);
         String option = "n";
+        String tipusInitial = null;
         String tipus = null;
         String numero = null;
         String dataCaducitat = null;
         String codiSeguretat = null;
         while (option.equals("n")) {
             System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Tipus:" + Color.RESET + " ");
-            tipus = scanner.nextLine().toUpperCase();
-            while (!tipus.equals("VISA") && !tipus.equals("MASTERCARD")) {
+            tipusInitial = scanner.nextLine();
+            tipus = tipusInitial.substring(0,1).toUpperCase() + tipusInitial.substring(1).toLowerCase();
+            while (!tipus.equals("Visa") && !tipus.equals("Mastercard") && !tipus.equals("Maestro")) {
                 Notifications.errada("Tipus de targeta incorrecte. Opcions disponibles: VISA O MASTERCARD");
                 System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Tipus (VISA/MASTERCARD):" + Color.RESET + " ");
-                tipus = scanner.nextLine().toUpperCase();
+                tipusInitial = scanner.nextLine();
+                tipus = tipusInitial.substring(0,1).toUpperCase() + tipusInitial.substring(1).toLowerCase();
             }
             System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Numero:" + Color.RESET + " ");
             numero = scanner.nextLine();

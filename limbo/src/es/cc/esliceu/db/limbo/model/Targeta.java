@@ -7,7 +7,7 @@ public class Targeta {
 
     private Integer id;
     private Long numero;
-    private String tipus;
+    private TipusTargeta tipus;
     private Date data_caducitat;
     private Integer codi_seguretat;
     private Client client;
@@ -59,11 +59,11 @@ public class Targeta {
         this.client = client;
     }
 
-    public String getTipus() {
+    public TipusTargeta getTipus() {
         return tipus;
     }
 
-    public void setTipus(String tipus) {
+    public void setTipus(TipusTargeta tipus) {
         this.tipus = tipus;
     }
 
@@ -72,7 +72,7 @@ public class Targeta {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Targeta targeta = (Targeta) o;
-        return Objects.equals(id, targeta.id) && Objects.equals(numero, targeta.numero) && Objects.equals(tipus, targeta.tipus) && Objects.equals(data_caducitat, targeta.data_caducitat) && Objects.equals(codi_seguretat, targeta.codi_seguretat) && Objects.equals(client, targeta.client);
+        return Objects.equals(id, targeta.id) && Objects.equals(numero, targeta.numero) && tipus == targeta.tipus && Objects.equals(data_caducitat, targeta.data_caducitat) && Objects.equals(codi_seguretat, targeta.codi_seguretat) && Objects.equals(client, targeta.client);
     }
 
     @Override
@@ -85,7 +85,7 @@ public class Targeta {
         return "Targeta{" +
                 "id=" + id +
                 ", numero=" + numero +
-                ", tipus='" + tipus + '\'' +
+                ", tipus=" + tipus +
                 ", data_caducitat=" + data_caducitat +
                 ", codi_seguretat=" + codi_seguretat +
                 ", client=" + client +

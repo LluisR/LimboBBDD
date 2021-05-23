@@ -2,10 +2,7 @@ package es.cc.esliceu.db.limbo.dao.impl;
 
 import es.cc.esliceu.db.limbo.dao.DBConnection;
 import es.cc.esliceu.db.limbo.dao.TargetaDao;
-import es.cc.esliceu.db.limbo.model.Adreca;
-import es.cc.esliceu.db.limbo.model.Ciutat;
-import es.cc.esliceu.db.limbo.model.Client;
-import es.cc.esliceu.db.limbo.model.Targeta;
+import es.cc.esliceu.db.limbo.model.*;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -41,7 +38,7 @@ public class TargetaDaoImpl implements TargetaDao {
 
         try {
             preparedStatement = this.connection.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString(1,targeta.getTipus());
+            preparedStatement.setString(1, TipusTargeta.valueOf(targeta.getTipus().toString()).toString());
             preparedStatement.setLong(2,targeta.getNumero());
             preparedStatement.setDate(3,date);
             preparedStatement.setInt(4,targeta.getCodi_seguretat());
@@ -119,7 +116,7 @@ public class TargetaDaoImpl implements TargetaDao {
                 targeta.setClient(client);
                 targeta.setNumero(rs.getLong("numero"));
                 targeta.setCodi_seguretat(rs.getInt("codi_seguretat"));
-                targeta.setTipus(rs.getString("tipus"));
+                targeta.setTipus(TipusTargeta.valueOf(rs.getString("tipus")));
                 targeta.setData_caducitat(rs.getDate("data_caducitat"));
                 targetes.add(targeta);
             }

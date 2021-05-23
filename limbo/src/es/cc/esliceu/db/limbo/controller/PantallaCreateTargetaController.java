@@ -5,6 +5,7 @@ import es.cc.esliceu.db.limbo.dao.impl.DBConnectionImpl;
 import es.cc.esliceu.db.limbo.dao.impl.TargetaDaoImpl;
 import es.cc.esliceu.db.limbo.model.Client;
 import es.cc.esliceu.db.limbo.model.Targeta;
+import es.cc.esliceu.db.limbo.model.TipusTargeta;
 import es.cc.esliceu.db.limbo.views.PantallaCreateTargetaView;
 
 import java.text.ParseException;
@@ -34,7 +35,7 @@ public class PantallaCreateTargetaController {
         }
         Targeta targeta = new Targeta();
         targeta.setClient(client);
-        targeta.setTipus(tipus);
+        targeta.setTipus(TipusTargeta.valueOf(tipus));
         targeta.setNumero(numero);
         targeta.setData_caducitat(date);
         targeta.setCodi_seguretat(codiSeguretat);
