@@ -13,9 +13,10 @@ import java.util.Date;
 
 public class PantallaCreateTargetaController {
 
+    private static PantallaCreateTargetaController instance;
     private final TargetaDao targetaDao;
 
-    public PantallaCreateTargetaController() {
+    private PantallaCreateTargetaController() {
         this.targetaDao = TargetaDaoImpl.getInstance();
     }
 
@@ -43,9 +44,16 @@ public class PantallaCreateTargetaController {
 
     public void nextAction(Client client, String from) {
         if (from.equals("settings")) {
-            PantallaPrincipalController pantallaPrincipalController = new PantallaPrincipalController(); pantallaPrincipalController.init(client);
+            PantallaPrincipalController.getInstance().init(client);
         } else if (from.equals("pagament")) {
-            PantallaPagamentController pantallaPagamentController = new PantallaPagamentController(); pantallaPagamentController.init(client);
+            PantallaPagamentController.getInstance().init(client);
         }
+    }
+
+    public synchronized static PantallaCreateTargetaController getInstance() {
+        if (instance == null) {
+            instance = new PantallaCreateTargetaController();
+        }
+        return instance;
     }
 }

@@ -14,7 +14,7 @@ public class PantallaCistellaView {
     private final PantallaCistellaController controller;
 
     private PantallaCistellaView () {
-        this.controller = new PantallaCistellaController();
+        this.controller = PantallaCistellaController.getInstance();
     }
 
     public void init(Client client) {

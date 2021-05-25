@@ -9,9 +9,10 @@ import es.cc.esliceu.db.limbo.views.PantallaRegistreView;
 
 public class PantallaRegistreController {
 
+    private static PantallaRegistreController instance;
     private final ClientDao clientDao;
 
-    public PantallaRegistreController() {
+    private PantallaRegistreController() {
         this.clientDao = ClientDaoImpl.getInstance();
     }
 
@@ -60,7 +61,13 @@ public class PantallaRegistreController {
     }
 
     public void registerSuccessful() {
-        PantallaInicialController pantallaInicialController = new PantallaInicialController();
-        pantallaInicialController.init();
+        PantallaInicialController.getInstance().init();
+    }
+
+    public synchronized static PantallaRegistreController getInstance() {
+        if (instance == null) {
+            instance = new PantallaRegistreController();
+        }
+        return instance;
     }
 }

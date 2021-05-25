@@ -16,7 +16,7 @@ public class PantallaSettingsView {
     private final PantallaSettingsController controller;
 
     private PantallaSettingsView () {
-        this.controller = new PantallaSettingsController();
+        this.controller = PantallaSettingsController.getInstance();
     }
 
     public void init(Client client) {

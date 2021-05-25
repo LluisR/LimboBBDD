@@ -14,7 +14,7 @@ public class PantallaConfirmacioCompraView {
     private final PantallaConfirmacioCompraController controller;
 
     private PantallaConfirmacioCompraView () {
-        this.controller = new PantallaConfirmacioCompraController();
+        this.controller = PantallaConfirmacioCompraController.getInstance();
     }
 
     public void init(Client client) {

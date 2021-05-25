@@ -8,9 +8,10 @@ import es.cc.esliceu.db.limbo.views.PantallaLoginView;
 
 public class PantallaLoginController {
 
+    private static PantallaLoginController instance;
     private final ClientDao clientDao;
 
-    public PantallaLoginController() {
+    private PantallaLoginController() {
         this.clientDao = ClientDaoImpl.getInstance();
     }
 
@@ -29,7 +30,13 @@ public class PantallaLoginController {
     }
 
     public void loginSuccessful(Client client) {
-        PantallaPrincipalController pantallaPrincipalController = new PantallaPrincipalController();
-        pantallaPrincipalController.init(client);
+        PantallaPrincipalController.getInstance().init(client);
+    }
+
+    public synchronized static PantallaLoginController getInstance() {
+        if (instance == null) {
+            instance = new PantallaLoginController();
+        }
+        return instance;
     }
 }

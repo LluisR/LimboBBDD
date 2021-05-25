@@ -11,10 +11,11 @@ import java.util.Collection;
 
 public class PantallaEnviamentController {
 
+    private static PantallaEnviamentController instance;
     private final AdrecaDao adrecaDao;
     private final CompraDao compraDao;
 
-    public PantallaEnviamentController() {
+    private PantallaEnviamentController() {
         this.adrecaDao = AdrecaDaoImpl.getInstance();
         this.compraDao = CompraDaoImpl.getInstance();
     }
@@ -29,15 +30,22 @@ public class PantallaEnviamentController {
         switch (option) {
             case "0":
             case "1":
-            case "2": client.getCompra().setAdreca((Adreca)client.getAdreces().toArray()[Integer.parseInt(option)]);PantallaConfirmacioCompraController pantallaConfirmacioCompraController = new PantallaConfirmacioCompraController(); pantallaConfirmacioCompraController.init(client); break;
-            case "a": PantallaCreateAdrecaController pantallaCreateAdrecaController = new PantallaCreateAdrecaController(); pantallaCreateAdrecaController.init(client, "enviament"); break;
+            case "2": client.getCompra().setAdreca((Adreca)client.getAdreces().toArray()[Integer.parseInt(option)]); PantallaConfirmacioCompraController.getInstance().init(client); break;
+            case "a": PantallaCreateAdrecaController.getInstance().init(client, "enviament"); break;
             case "b": this.init(client); break;
-            case "x": PantallaPagamentController pantallaPagamentController = new PantallaPagamentController(); pantallaPagamentController.init(client); break;
+            case "x": PantallaPagamentController.getInstance().init(client); break;
         }
     }
 
     public void deleteAdress(Adreca adreca) {
         this.compraDao.updateByAdress(adreca);
         this.adrecaDao.delete(adreca);
+    }
+
+    public synchronized static PantallaEnviamentController getInstance() {
+        if (instance == null) {
+            instance = new PantallaEnviamentController();
+        }
+        return instance;
     }
 }

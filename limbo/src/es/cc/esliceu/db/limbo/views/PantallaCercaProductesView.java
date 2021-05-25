@@ -16,7 +16,7 @@ public class PantallaCercaProductesView {
     private final PantallaCercaProductesController controller;
 
     private PantallaCercaProductesView () {
-        this.controller = new PantallaCercaProductesController();
+        this.controller = PantallaCercaProductesController.getInstance();
     }
 
     public void init(Client client, Collection<Categoria> categories) {

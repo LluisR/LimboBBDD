@@ -10,10 +10,11 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class PantallaCercaProductesController {
 
+    private static PantallaCercaProductesController instance;
     private final ProducteDao producteDao;
     private final CategoriaDao categoriaDao;
 
-    public PantallaCercaProductesController() {
+    private PantallaCercaProductesController() {
         this.producteDao = ProducteDaoImpl.getInstance();
         this.categoriaDao = CategoriaDaoImpl.getInstance();
     }
@@ -91,20 +92,25 @@ public class PantallaCercaProductesController {
     }
 
     public void goToCistella(Client client) {
-        PantallaCistellaController pantallaCistellaController = new PantallaCistellaController();
-        pantallaCistellaController.init(client);
+        PantallaCistellaController.getInstance().init(client);
     }
 
     public void nextAction(Client client, String option) {
         switch (option) {
             case "f": this.goToCistella(client); break;
             case "c": this.init(client); break;
-            case "x": PantallaPrincipalController pantallaPrincipalController = new PantallaPrincipalController(); pantallaPrincipalController.init(client); break;
+            case "x": PantallaPrincipalController.getInstance().init(client); break;
         }
     }
 
     public void goBack(Client client) {
-        PantallaPrincipalController pantallaPrincipalController = new PantallaPrincipalController();
-        pantallaPrincipalController.init(client);
+        PantallaPrincipalController.getInstance().init(client);
+    }
+
+    public synchronized static PantallaCercaProductesController getInstance() {
+        if (instance == null) {
+            instance = new PantallaCercaProductesController();
+        }
+        return instance;
     }
 }

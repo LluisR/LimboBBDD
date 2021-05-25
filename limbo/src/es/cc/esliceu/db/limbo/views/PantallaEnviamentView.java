@@ -15,7 +15,7 @@ public class PantallaEnviamentView {
     private final PantallaEnviamentController controller;
 
     private PantallaEnviamentView () {
-        this.controller = new PantallaEnviamentController();
+        this.controller = PantallaEnviamentController.getInstance();
     }
 
     public void init(Client client) {

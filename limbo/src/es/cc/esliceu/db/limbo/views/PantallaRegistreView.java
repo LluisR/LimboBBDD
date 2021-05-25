@@ -12,7 +12,7 @@ public class PantallaRegistreView {
     private final PantallaRegistreController controller;
 
     private PantallaRegistreView() {
-        this.controller = new PantallaRegistreController();
+        this.controller = PantallaRegistreController.getInstance();
     }
 
     public void init() {

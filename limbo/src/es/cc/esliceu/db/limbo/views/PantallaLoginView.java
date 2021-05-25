@@ -13,7 +13,7 @@ public class PantallaLoginView {
     private final PantallaLoginController controller;
 
     private PantallaLoginView() {
-        this.controller = new PantallaLoginController();
+        this.controller = PantallaLoginController.getInstance();
     }
 
     public void init() {

@@ -13,7 +13,7 @@ public class PantallaCompresRealitzadesView {
     private final PantallaCompresRealitzadesController controller;
 
     private PantallaCompresRealitzadesView () {
-        this.controller = new PantallaCompresRealitzadesController();
+        this.controller = PantallaCompresRealitzadesController.getInstance();
     }
 
     public void init(Client client) {

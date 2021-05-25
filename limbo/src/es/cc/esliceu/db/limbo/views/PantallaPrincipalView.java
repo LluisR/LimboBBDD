@@ -16,7 +16,7 @@ public class PantallaPrincipalView {
     private final PantallaPrincipalController controller;
 
     private PantallaPrincipalView () {
-        this.controller = new PantallaPrincipalController();
+        this.controller = PantallaPrincipalController.getInstance();
     }
 
     public void init(Client client, Collection<Producte> productesSuggerits) {

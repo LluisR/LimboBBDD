@@ -8,7 +8,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class PantallaCistellaController {
 
-    public PantallaCistellaController() {
+    private static PantallaCistellaController instance;
+
+    private PantallaCistellaController() {
     }
 
     public void init(Client client) {
@@ -27,8 +29,15 @@ public class PantallaCistellaController {
     public void nextAction(Client client, String option, AtomicInteger idx) {
         switch (option) {
             case "e": PantallaCistellaView.getInstance().deleteProducte(client, idx); break;
-            case "p": PantallaPagamentController pantallaPagamentController = new PantallaPagamentController(); pantallaPagamentController.init(client); break;
-            case "x": PantallaPrincipalController pantallaPrincipalController = new PantallaPrincipalController(); pantallaPrincipalController.init(client); break;
+            case "p": PantallaPagamentController.getInstance().init(client); break;
+            case "x": PantallaPrincipalController.getInstance().init(client); break;
         }
+    }
+
+    public synchronized static PantallaCistellaController getInstance() {
+        if (instance == null) {
+            instance = new PantallaCistellaController();
+        }
+        return instance;
     }
 }

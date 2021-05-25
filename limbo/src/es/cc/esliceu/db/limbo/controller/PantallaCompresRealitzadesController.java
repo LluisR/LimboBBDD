@@ -13,11 +13,12 @@ import java.util.Collection;
 
 public class PantallaCompresRealitzadesController {
 
+    private static PantallaCompresRealitzadesController instance;
     private final CompraDao compraDao;
     private final DetallCompraDao detallCompraDao;
     private final ProducteDao producteDao;
 
-    public PantallaCompresRealitzadesController() {
+    private PantallaCompresRealitzadesController() {
         this.compraDao = CompraDaoImpl.getInstance();
         this.detallCompraDao = DetallCompraDaoImpl.getInstance();
         this.producteDao = ProducteDaoImpl.getInstance();
@@ -36,7 +37,13 @@ public class PantallaCompresRealitzadesController {
     }
 
     public void goBack(Client client) {
-        PantallaClientController pantallaClientController = new PantallaClientController();
-        pantallaClientController.init(client);
+        PantallaClientController.getInstance().init(client);
+    }
+
+    public synchronized static PantallaCompresRealitzadesController getInstance() {
+        if (instance == null) {
+            instance = new PantallaCompresRealitzadesController();
+        }
+        return instance;
     }
 }

@@ -9,9 +9,10 @@ import es.cc.esliceu.db.limbo.views.PantallaCreateAdrecaView;
 
 public class PantallaCreateAdrecaController {
 
+    private static PantallaCreateAdrecaController instance;
     private final AdrecaDao adrecaDao;
 
-    public PantallaCreateAdrecaController() {
+    private PantallaCreateAdrecaController() {
         this.adrecaDao = AdrecaDaoImpl.getInstance();
     }
 
@@ -36,9 +37,16 @@ public class PantallaCreateAdrecaController {
 
     public void nextAction(Client client, String from) {
         if (from.equals("settings")) {
-            PantallaSettingsController pantallaSettingsController = new PantallaSettingsController(); pantallaSettingsController.init(client);
+            PantallaSettingsController.getInstance().init(client);
         } else if (from.equals("enviament")) {
-            PantallaEnviamentController pantallaEnviamentController = new PantallaEnviamentController(); pantallaEnviamentController.init(client);
+            PantallaEnviamentController.getInstance().init(client);
         }
+    }
+
+    public synchronized static PantallaCreateAdrecaController getInstance() {
+        if (instance == null) {
+            instance = new PantallaCreateAdrecaController();
+        }
+        return instance;
     }
 }

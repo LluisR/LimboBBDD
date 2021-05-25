@@ -5,7 +5,6 @@ import es.cc.esliceu.db.limbo.GeneradorHash;
 import es.cc.esliceu.db.limbo.dao.CompraDao;
 import es.cc.esliceu.db.limbo.dao.DetallCompraDao;
 import es.cc.esliceu.db.limbo.dao.impl.CompraDaoImpl;
-import es.cc.esliceu.db.limbo.dao.impl.DBConnectionImpl;
 import es.cc.esliceu.db.limbo.dao.impl.DetallCompraDaoImpl;
 import es.cc.esliceu.db.limbo.model.*;
 import es.cc.esliceu.db.limbo.views.PantallaConfirmacioCompraView;
@@ -14,10 +13,11 @@ import java.util.Date;
 
 public class PantallaConfirmacioCompraController {
 
+    private static PantallaConfirmacioCompraController instance;
     private final CompraDao compraDao;
     private final DetallCompraDao detallCompraDao;
 
-    public PantallaConfirmacioCompraController() {
+    private PantallaConfirmacioCompraController() {
         this.compraDao = CompraDaoImpl.getInstance();
         this.detallCompraDao = DetallCompraDaoImpl.getInstance();
     }
@@ -30,7 +30,7 @@ public class PantallaConfirmacioCompraController {
     public void nextAction(Client client, String option) {
         switch (option) {
             case "s": this.purchase(client); break;
-            case "n": PantallaEnviamentController pantallaEnviamentController = new PantallaEnviamentController(); pantallaEnviamentController.init(client); break;
+            case "n": PantallaEnviamentController.getInstance().init(client); break;
         }
     }
 
@@ -82,7 +82,13 @@ public class PantallaConfirmacioCompraController {
         Compra newCompra = new Compra();
         newCompra.setClient(client);
         client.setCompra(newCompra);
-        PantallaPrincipalController pantallaPrincipalController = new PantallaPrincipalController();
-        pantallaPrincipalController.init(client);
+        PantallaPrincipalController.getInstance().init(client);
+    }
+
+    public synchronized static PantallaConfirmacioCompraController getInstance() {
+        if (instance == null) {
+            instance = new PantallaConfirmacioCompraController();
+        }
+        return instance;
     }
 }

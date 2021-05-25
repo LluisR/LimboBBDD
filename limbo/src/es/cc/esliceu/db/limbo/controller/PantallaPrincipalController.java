@@ -6,19 +6,20 @@ import es.cc.esliceu.db.limbo.dao.DescompteProducteDao;
 import es.cc.esliceu.db.limbo.dao.ProducteDao;
 import es.cc.esliceu.db.limbo.dao.impl.*;
 import es.cc.esliceu.db.limbo.model.*;
+import es.cc.esliceu.db.limbo.views.PantallaCercaProductesView;
 import es.cc.esliceu.db.limbo.views.PantallaPrincipalView;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class PantallaPrincipalController {
 
+    private static PantallaPrincipalController instance;
     private final ProducteDao producteDao;
     private final DescompteDao descompteDao;
     private final DescompteClientDao descompteClientDao;
     private final DescompteProducteDao descompteProducteDao;
 
-    public PantallaPrincipalController() {
+    private PantallaPrincipalController() {
         this.producteDao = ProducteDaoImpl.getInstance();
         this.descompteDao = DescompteDaoImpl.getInstance();
         this.descompteClientDao = DescompteClientDaoImpl.getInstance();
@@ -66,11 +67,18 @@ public class PantallaPrincipalController {
 
     public void nextPage(String option, Client client) {
         switch (option) {
-            case "c": PantallaCercaProductesController pantallaCercaProductesController = new PantallaCercaProductesController(); pantallaCercaProductesController.init(client) ;break;
-            case "v": PantallaCistellaController pantallaCistellaController = new PantallaCistellaController(); pantallaCistellaController.init(client); break;
-            case "d": PantallaClientController pantallaClientController = new PantallaClientController(); pantallaClientController.init(client); break;
-            case "h": PantallaAjudaController pantallaAjudaController = new PantallaAjudaController(); pantallaAjudaController.init(client); break;
-            case "x": PantallaInicialController pantallaInicialController = new PantallaInicialController(); pantallaInicialController.init(); break;
+            case "c": PantallaCercaProductesController.getInstance().init(client) ;break;
+            case "v": PantallaCistellaController.getInstance().init(client); break;
+            case "d": PantallaClientController.getInstance().init(client); break;
+            case "h": PantallaAjudaController.getInstance().init(client); break;
+            case "x": PantallaInicialController.getInstance().init(); break;
         }
+    }
+
+    public synchronized static PantallaPrincipalController getInstance() {
+        if (instance == null) {
+            instance = new PantallaPrincipalController();
+        }
+        return instance;
     }
 }

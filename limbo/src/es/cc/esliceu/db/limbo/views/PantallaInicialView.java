@@ -12,7 +12,7 @@ public class PantallaInicialView {
     private final PantallaInicialController controller;
 
     private PantallaInicialView () {
-        this.controller = new PantallaInicialController();
+        this.controller = PantallaInicialController.getInstance();
     }
 
     public void init(){

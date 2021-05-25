@@ -14,7 +14,7 @@ public class PantallaCreateAdrecaView {
     private final PantallaCreateAdrecaController controller;
 
     private PantallaCreateAdrecaView () {
-        this.controller = new PantallaCreateAdrecaController();
+        this.controller = PantallaCreateAdrecaController.getInstance();
     }
 
     public void init(Client client, String from) {

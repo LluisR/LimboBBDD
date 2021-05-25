@@ -14,7 +14,7 @@ public class PantallaClientView {
     private final PantallaClientController controller;
 
     private PantallaClientView () {
-        this.controller = new PantallaClientController();
+        this.controller = PantallaClientController.getInstance();
     }
 
     public void init(Client client) {

@@ -13,7 +13,7 @@ public class PantallaCreateTargetaView {
     private final PantallaCreateTargetaController controller;
 
     private PantallaCreateTargetaView () {
-        this.controller = new PantallaCreateTargetaController();
+        this.controller = PantallaCreateTargetaController.getInstance();
     }
 
     public void init(Client client, String from) {

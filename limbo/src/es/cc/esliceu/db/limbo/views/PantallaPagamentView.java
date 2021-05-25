@@ -15,7 +15,7 @@ public class PantallaPagamentView {
     private final PantallaPagamentController controller;
 
     private PantallaPagamentView () {
-        this.controller = new PantallaPagamentController();
+        this.controller = PantallaPagamentController.getInstance();
     }
 
     public void init(Client client) {

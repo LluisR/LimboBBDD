@@ -12,11 +12,11 @@ import java.util.Collection;
 
 public class PantallaPagamentController {
 
+    private static PantallaPagamentController instance;
     private final TargetaDao targetaDao;
     private final CompraDao compraDao;
 
-    public PantallaPagamentController() {
-
+    private PantallaPagamentController() {
         this.targetaDao = TargetaDaoImpl.getInstance();
         this.compraDao = CompraDaoImpl.getInstance();
     }
@@ -31,15 +31,22 @@ public class PantallaPagamentController {
         switch (option) {
             case "0":
             case "1":
-            case "2": client.getCompra().setTargeta((Targeta)client.getTargetes().toArray()[Integer.parseInt(option)]); PantallaEnviamentController pantallaEnviamentController = new PantallaEnviamentController(); pantallaEnviamentController.init(client);
-            case "a": PantallaCreateTargetaController pantallaCreateTargetaController = new PantallaCreateTargetaController(); pantallaCreateTargetaController.init(client, "pagament"); break;
+            case "2": client.getCompra().setTargeta((Targeta)client.getTargetes().toArray()[Integer.parseInt(option)]); PantallaEnviamentController.getInstance().init(client);
+            case "a": PantallaCreateTargetaController.getInstance().init(client, "pagament"); break;
             case "b": this.init(client); break;
-            case "x": PantallaCistellaController pantallaCistellaController = new PantallaCistellaController(); pantallaCistellaController.init(client); break;
+            case "x": PantallaCistellaController.getInstance().init(client); break;
         }
     }
 
     public void deleteTargeta(Targeta targeta) {
         this.compraDao.updateByTargeta(targeta);
         this.targetaDao.delete(targeta);
+    }
+
+    public synchronized static PantallaPagamentController getInstance() {
+        if (instance == null) {
+            instance = new PantallaPagamentController();
+        }
+        return instance;
     }
 }

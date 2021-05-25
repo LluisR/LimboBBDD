@@ -1,17 +1,14 @@
 package es.cc.esliceu.db.limbo.controller;
 
-import es.cc.esliceu.db.limbo.dao.ProducteDao;
-import es.cc.esliceu.db.limbo.dao.impl.DBConnectionImpl;
-import es.cc.esliceu.db.limbo.dao.impl.ProducteDaoImpl;
 import es.cc.esliceu.db.limbo.model.Client;
 import es.cc.esliceu.db.limbo.views.PantallaAjudaView;
 
 public class PantallaAjudaController {
 
-    private final ProducteDao producteDao;
 
-    public PantallaAjudaController() {
-        this.producteDao = ProducteDaoImpl.getInstance();
+    private static PantallaAjudaController instance;
+
+    private PantallaAjudaController() {
     }
 
     public void init(Client client) {
@@ -24,11 +21,16 @@ public class PantallaAjudaController {
 
     public void goBack(Client client) {
         if (client == null) {
-            PantallaInicialController pantallaInicialController = new PantallaInicialController();
-            pantallaInicialController.init();
+            PantallaInicialController.getInstance().init();
         } else {
-            PantallaPrincipalController pantallaPrincipalController = new PantallaPrincipalController();
-            pantallaPrincipalController.init(client);
+            PantallaPrincipalController.getInstance().init(client);
         }
+    }
+
+    public synchronized static PantallaAjudaController getInstance() {
+        if (instance == null) {
+            instance = new PantallaAjudaController();
+        }
+        return instance;
     }
 }

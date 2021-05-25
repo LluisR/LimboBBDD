@@ -14,7 +14,7 @@ public class PantallaAjudaView {
     private final PantallaAjudaController controller;
 
     private PantallaAjudaView () {
-        this.controller = new PantallaAjudaController();
+        this.controller = PantallaAjudaController.getInstance();
     }
 
     public void init(Client client) {

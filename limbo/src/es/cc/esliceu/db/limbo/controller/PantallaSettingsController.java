@@ -8,9 +8,10 @@ import es.cc.esliceu.db.limbo.views.PantallaSettingsView;
 
 public class PantallaSettingsController {
 
+    private static PantallaSettingsController instance;
     private final ClientDao clientDao;
 
-    public PantallaSettingsController() {
+    private PantallaSettingsController() {
         this.clientDao = ClientDaoImpl.getInstance();
     }
 
@@ -22,8 +23,8 @@ public class PantallaSettingsController {
         switch (option) {
             case "a": PantallaSettingsView.getInstance().modifyClient(client);
             case "b": PantallaSettingsView.getInstance().changePassword(client);
-            case "x": PantallaClientController pantallaClientController = new PantallaClientController(); pantallaClientController.init(client); break;
-            default: PantallaPrincipalController pantallaPrincipalController = new PantallaPrincipalController(); pantallaPrincipalController.init(client); break;
+            case "x": PantallaClientController.getInstance().init(client); break;
+            default: PantallaPrincipalController.getInstance().init(client); break;
         }
     }
 
@@ -33,5 +34,12 @@ public class PantallaSettingsController {
 
     public boolean checkOldPassword(Client client, String oldPassword) {
         return client.getContrasenya().equals(GeneradorHash.generaHash(oldPassword));
+    }
+
+    public synchronized static PantallaSettingsController getInstance() {
+        if (instance == null) {
+            instance = new PantallaSettingsController();
+        }
+        return instance;
     }
 }
