@@ -36,7 +36,14 @@ public class PantallaPrincipalView {
             idx.set(idx.get() + 1);
         });
         System.out.println(Color.RED_BOLD + "---------------------------------------------------------" + Color.RESET);
-        System.out.println(Color.BLUE + "(0-4)" + Color.RESET + " Producte suggerits");
+        System.out.println(Color.BLUE + "(0-" + (productesSuggerits.size()-1) + ")" + Color.RESET + " Producte suggerits");
+        System.out.println(Color.RED_BOLD + "---------------    Descomptes Actius    ---------------" + Color.RESET);
+        client.getDescomptes().forEach((descompte, productes) -> {
+            productes.forEach(producte -> {
+                System.out.println(producte.getNom() + "  " + producte.getPvp() + "  " + Color.RED_UNDERLINED + descompte.getPercentatge() + "%" + Color.RESET + " caduca: " + descompte.getDataFi());
+            });
+        });
+        System.out.println(Color.RED_BOLD + "---------------------------------------------------------" + Color.RESET);
         System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "\t" + "Esculli una opció:" + Color.RESET + " ");
         Scanner scanner = new Scanner(System.in);
         String option = scanner.nextLine().toLowerCase();

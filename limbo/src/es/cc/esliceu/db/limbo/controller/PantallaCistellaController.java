@@ -22,7 +22,6 @@ public class PantallaCistellaController {
         } else {
             producte.setUnitats_producte(producte.getUnitats_producte()-Integer.parseInt(unitats));
         }
-        /*client.getCompra().calculaTotal();*/
         PantallaCistellaView pantallaCistellaView = new PantallaCistellaView();
         pantallaCistellaView.init(client);
     }

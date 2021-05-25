@@ -1,19 +1,12 @@
 package es.cc.esliceu.db.limbo.controller;
 
-import es.cc.esliceu.db.limbo.dao.CategoriaDao;
-import es.cc.esliceu.db.limbo.dao.ProducteDao;
-import es.cc.esliceu.db.limbo.dao.impl.CategoriaDaoImpl;
-import es.cc.esliceu.db.limbo.dao.impl.DBConnectionImpl;
-import es.cc.esliceu.db.limbo.dao.impl.ProducteDaoImpl;
-import es.cc.esliceu.db.limbo.model.Categoria;
-import es.cc.esliceu.db.limbo.model.Client;
-import es.cc.esliceu.db.limbo.model.DetallCompra;
-import es.cc.esliceu.db.limbo.model.Producte;
+import es.cc.esliceu.db.limbo.dao.*;
+import es.cc.esliceu.db.limbo.dao.impl.*;
+import es.cc.esliceu.db.limbo.model.*;
 import es.cc.esliceu.db.limbo.views.PantallaCercaProductesView;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class PantallaCercaProductesController {
 
@@ -78,10 +71,25 @@ public class PantallaCercaProductesController {
             DetallCompra newDetallCompra = new DetallCompra();
             newDetallCompra.setProducte(producte);
             newDetallCompra.setUnitats_producte(unitats);
+            newDetallCompra.setPes(producte.getPes());
+            newDetallCompra.setPvp(this.addDiscount(client, newDetallCompra));
             Collection<DetallCompra> detalls = client.getCompra().getProductes();
             detalls.add(newDetallCompra);
             client.getCompra().setProductes(detalls);
         }
+    }
+
+    private Double addDiscount(Client client, DetallCompra detallCompra) {
+        AtomicReference<Double> finalPrice = new AtomicReference<>(detallCompra.getProducte().getPvp());
+        client.getDescomptes().forEach((descompte, productes) -> {
+            productes.forEach(producteDis -> {
+                if (detallCompra.getProducte().getId() == producteDis.getId()) {
+                    finalPrice.set(detallCompra.getProducte().getPvp() * (100-descompte.getPercentatge())/100);
+                    detallCompra.setPercentatge(descompte.getPercentatge());
+                }
+            });
+        });
+        return Double.parseDouble(finalPrice.toString());
     }
 
     public void goToCistella(Client client) {

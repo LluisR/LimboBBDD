@@ -26,7 +26,7 @@ public class PantallaCistellaView {
         System.out.println(Color.YELLOW_BRIGHT + "*****************************************" + Color.RESET);
         AtomicInteger idx = new AtomicInteger();
         client.getCompra().getProductes().forEach((detallCompra) -> {
-            System.out.println(Color.YELLOW_BRIGHT + "" + idx + Color.BLUE_BRIGHT + "   " + detallCompra.getProducte().getNom() + Color.RESET +  "  " + detallCompra.getProducte().getPvp() + "€" + "  " + detallCompra.getUnitats_producte() + " unitats");
+            System.out.println(Color.YELLOW_BRIGHT + "" + idx + Color.BLUE_BRIGHT + "   " + detallCompra.getProducte().getNom() + Color.RESET +  "  " + (detallCompra.getPvp()<detallCompra.getProducte().getPvp()?(detallCompra.getPvp() + "€  " + Color.RED_UNDERLINED + detallCompra.getProducte().getPvp() + "€" + Color.RESET + " -" + detallCompra.getPercentatge() + "%"):(detallCompra.getProducte().getPvp()) + "€") + "  " + detallCompra.getUnitats_producte() + " unitats");
             idx.set(idx.get() + 1);
         });
         System.out.println("-----------------------------------------");

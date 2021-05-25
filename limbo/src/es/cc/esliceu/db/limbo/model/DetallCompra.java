@@ -9,6 +9,7 @@ public class DetallCompra {
     private Double pvp;
     private Double pes;
     private Integer unitats_producte;
+    private Integer percentatge;
 
     public DetallCompra() {
     }
@@ -58,17 +59,25 @@ public class DetallCompra {
         this.unitats_producte = unitats_producte;
     }
 
+    public Integer getPercentatge() {
+        return percentatge;
+    }
+
+    public void setPercentatge(Integer percentatge) {
+        this.percentatge = percentatge;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DetallCompra that = (DetallCompra) o;
-        return Objects.equals(compra, that.compra) && Objects.equals(producte, that.producte) && Objects.equals(pvp, that.pvp) && Objects.equals(pes, that.pes) && Objects.equals(unitats_producte, that.unitats_producte);
+        return Objects.equals(compra, that.compra) && Objects.equals(producte, that.producte) && Objects.equals(pvp, that.pvp) && Objects.equals(pes, that.pes) && Objects.equals(unitats_producte, that.unitats_producte) && Objects.equals(percentatge, that.percentatge);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(compra, producte, pvp, pes, unitats_producte);
+        return Objects.hash(compra, producte, pvp, pes, unitats_producte, percentatge);
     }
 
     @Override
@@ -79,6 +88,7 @@ public class DetallCompra {
                 ", pvp=" + pvp +
                 ", pes=" + pes +
                 ", unitats_producte=" + unitats_producte +
+                ", percentatge=" + percentatge +
                 '}';
     }
 }

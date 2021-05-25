@@ -44,7 +44,9 @@ public class PantallaConfirmacioCompraController {
         client.getCompra().setId(idCompra);
         client.getCompra().getProductes().forEach(detallCompra -> {
             detallCompra.setCompra(client.getCompra());
-            detallCompra.setPvp(detallCompra.getProducte().getPvp());
+            if (detallCompra.getPvp() == null) {
+                detallCompra.setPvp(detallCompra.getProducte().getPvp());
+            }
             detallCompra.setPes(detallCompra.getPes());
             this.detallCompraDao.save(detallCompra);
         });
@@ -52,9 +54,6 @@ public class PantallaConfirmacioCompraController {
         EnviadorEmail.enviaEmail(client.getEmail(), "Confirmació de compra: " + client.getCompra().getId_transaccio(), resum);
         PantallaConfirmacioCompraView pantallaConfirmacioCompraView = new PantallaConfirmacioCompraView();
         pantallaConfirmacioCompraView.confirmacioCompra(client);
-        Compra newCompra = new Compra();
-        newCompra.setClient(client);
-        client.setCompra(newCompra);
     }
 
     private String generaResumEmail(Client client) {
@@ -82,6 +81,9 @@ public class PantallaConfirmacioCompraController {
     }
 
     public void goHome(Client client) {
+        Compra newCompra = new Compra();
+        newCompra.setClient(client);
+        client.setCompra(newCompra);
         PantallaPrincipalController pantallaPrincipalController = new PantallaPrincipalController();
         pantallaPrincipalController.init(client);
     }

@@ -25,7 +25,7 @@ public class PantallaCompresRealitzadesView {
             client.getCompres().forEach((compra) -> {
                 System.out.println(Color.YELLOW_BRIGHT + "" + idx.get() + Color.CYAN_BRIGHT + "  " + compra.getData() + " " + compra.getId_transaccio() + " " + Color.RED_BOLD + compra.getTotal() + "€" + Color.RESET);
                 compra.getProductes().forEach(producte -> {
-                    System.out.println("    " + producte.getProducte().getNom() + "  " + producte.getPvp() + "€  " + producte.getUnitats_producte() + " unitats.");
+                    System.out.println("     " + producte.getProducte().getNom() + "  " + (producte.getPvp()<producte.getProducte().getPvp()?(producte.getPvp() + "€  " + Color.RED_UNDERLINED + Math.round(100-(producte.getPvp()*100/(producte.getProducte().getPvp()))) + "%"+ Color.RESET + "  " + Color.RED_UNDERLINED + producte.getProducte().getPvp() + "€" + Color.RESET):(producte.getProducte().getPvp()) + "€") + "  " + producte.getUnitats_producte() + " unitats.");
                 });
             });
         } else {

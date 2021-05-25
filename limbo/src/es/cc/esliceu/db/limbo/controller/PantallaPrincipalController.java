@@ -1,21 +1,28 @@
 package es.cc.esliceu.db.limbo.controller;
 
+import es.cc.esliceu.db.limbo.dao.DescompteClientDao;
+import es.cc.esliceu.db.limbo.dao.DescompteDao;
+import es.cc.esliceu.db.limbo.dao.DescompteProducteDao;
 import es.cc.esliceu.db.limbo.dao.ProducteDao;
-import es.cc.esliceu.db.limbo.dao.impl.DBConnectionImpl;
-import es.cc.esliceu.db.limbo.dao.impl.ProducteDaoImpl;
-import es.cc.esliceu.db.limbo.model.Client;
-import es.cc.esliceu.db.limbo.model.Compra;
-import es.cc.esliceu.db.limbo.model.Producte;
+import es.cc.esliceu.db.limbo.dao.impl.*;
+import es.cc.esliceu.db.limbo.model.*;
 import es.cc.esliceu.db.limbo.views.PantallaPrincipalView;
 
-import java.util.Collection;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class PantallaPrincipalController {
 
     private final ProducteDao producteDao;
+    private final DescompteDao descompteDao;
+    private final DescompteClientDao descompteClientDao;
+    private final DescompteProducteDao descompteProducteDao;
 
     public PantallaPrincipalController() {
         this.producteDao = new ProducteDaoImpl(DBConnectionImpl.getInstance());
+        this.descompteDao = new DescompteDaoImpl(DBConnectionImpl.getInstance());
+        this.descompteClientDao = new DescompteClientDaoImpl(DBConnectionImpl.getInstance());
+        this.descompteProducteDao = new DescompteProducteDaoImpl(DBConnectionImpl.getInstance());
     }
 
     public void init(Client client) {
@@ -25,12 +32,37 @@ public class PantallaPrincipalController {
             compra.setClient(client);
             client.setCompra(compra);
         }
+        if (client.getDescomptes() == null) {
+            client.setDescomptes(this.getDiscounts(client));
+        }
         Collection<Producte> suggestedProducts = this.getProductesSuggerits();
         pantallaPrincipalView.init(client, suggestedProducts);
     }
 
     public Collection<Producte> getProductesSuggerits() {
         return this.producteDao.findSuggested();
+    }
+
+    private Map<Descompte, Collection<Producte>> getDiscounts(Client client) {
+        Collection<DescompteClient> descomptesClient = this.descompteClientDao.findAllByIdClient(client);
+        Collection<Descompte> descomptes = new ArrayList<>();
+        descomptesClient.forEach(descompteClient -> {
+            Descompte descompte = this.descompteDao.findById(descompteClient.getDescompte());
+            if (descompte.getDataInici().compareTo(new Date()) < 0 && descompte.getDataFi().compareTo(new Date()) > 0) descomptes.add(descompte);
+        });
+
+        Map<Descompte, Collection<Producte>> descompteProducteMap = new HashMap<>();
+        descomptes.forEach(descompte -> {
+            Collection<DescompteProducte> descompteProductes = this.descompteProducteDao.findAllByIdDescompte(descompte);
+            Collection<Producte> productes = new ArrayList<>();
+            descompteProductes.forEach(descompteProducte -> {
+                Producte producte = this.producteDao.findById(descompteProducte.getProducte().getId());
+                productes.add(producte);
+                System.out.println(producte);
+            });
+            descompteProducteMap.put(descompte, productes);
+        });
+        return descompteProducteMap;
     }
 
     public void nextPage(String option, Client client) {

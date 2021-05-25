@@ -1,6 +1,7 @@
 package es.cc.esliceu.db.limbo.model;
 
 import java.util.Collection;
+import java.util.Map;
 import java.util.Objects;
 
 public class Client {
@@ -16,6 +17,7 @@ public class Client {
     private Collection<Targeta> targetes;
     private Collection<Adreca> adreces;
     private Collection<Compra> compres;
+    private Map<Descompte, Collection<Producte>> descomptes;
 
     public Client() {
     }
@@ -110,6 +112,14 @@ public class Client {
 
     public void setCompres(Collection<Compra> compres) {
         this.compres = compres;
+    }
+
+    public Map<Descompte, Collection<Producte>> getDescomptes() {
+        return descomptes;
+    }
+
+    public void setDescomptes(Map<Descompte, Collection<Producte>> descomptes) {
+        this.descomptes = descomptes;
     }
 
     @Override

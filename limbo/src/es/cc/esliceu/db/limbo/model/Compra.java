@@ -94,11 +94,8 @@ public class Compra {
     private void calculaTotal() {
         this.total = 0.0;
         this.productes.forEach((detallCompra) -> {
-            this.total += detallCompra.getProducte().getPvp() * detallCompra.getUnitats_producte();
+            this.total += detallCompra.getPvp() * detallCompra.getUnitats_producte();
             this.total = Math.round(this.total * 100.0) / 100.0;
-            /*System.out.println("PRECIO PRODUCTO " + detallCompra.getProducte().getPvp());
-            System.out.println("UNITADES PRODUCTO " + detallCompra.getUnitats_producte());
-            System.out.println("TOTAL " + detallCompra.getProducte().getPvp() * detallCompra.getUnitats_producte());*/
         });
     }
 
