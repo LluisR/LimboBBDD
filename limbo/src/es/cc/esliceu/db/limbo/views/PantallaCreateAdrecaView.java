@@ -10,9 +10,10 @@ import java.util.Scanner;
 
 public class PantallaCreateAdrecaView {
 
+    private static PantallaCreateAdrecaView instance;
     private final PantallaCreateAdrecaController controller;
 
-    public PantallaCreateAdrecaView () {
+    private PantallaCreateAdrecaView () {
         this.controller = new PantallaCreateAdrecaController();
     }
 
@@ -53,5 +54,12 @@ public class PantallaCreateAdrecaView {
         this.controller.saveNewAdreca(client, carrer, numero, Integer.parseInt(pis), porta, cp);
         Notifications.info("Adreça afegida correctament!");
         this.controller.nextAction(client, from);
+    }
+
+    public synchronized static PantallaCreateAdrecaView getInstance() {
+        if (instance == null) {
+            instance = new PantallaCreateAdrecaView();
+        }
+        return instance;
     }
 }

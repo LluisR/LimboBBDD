@@ -13,11 +13,12 @@ import java.util.Collection;
 
 public class AdrecaDaoImpl implements AdrecaDao {
 
+    private static AdrecaDaoImpl instance;
     private DBConnection connection;
 
-    public AdrecaDaoImpl(DBConnection dbConnection) {
-
+    private AdrecaDaoImpl(DBConnection dbConnection) {
         this.connection = dbConnection;
+
     }
 
     @Override
@@ -134,5 +135,12 @@ public class AdrecaDaoImpl implements AdrecaDao {
         }
 
         return null;
+    }
+
+    public synchronized static AdrecaDaoImpl getInstance() {
+        if (instance == null) {
+            instance = new AdrecaDaoImpl(DBConnectionImpl.getInstance());
+        }
+        return instance;
     }
 }

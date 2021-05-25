@@ -12,8 +12,7 @@ public class PantallaCistellaController {
     }
 
     public void init(Client client) {
-        PantallaCistellaView pantallaCistellaView = new PantallaCistellaView();
-        pantallaCistellaView.init(client);
+        PantallaCistellaView.getInstance().init(client);
     }
 
     public void dropProduct(Client client, DetallCompra producte, String unitats) {
@@ -22,13 +21,12 @@ public class PantallaCistellaController {
         } else {
             producte.setUnitats_producte(producte.getUnitats_producte()-Integer.parseInt(unitats));
         }
-        PantallaCistellaView pantallaCistellaView = new PantallaCistellaView();
-        pantallaCistellaView.init(client);
+        PantallaCistellaView.getInstance().init(client);
     }
 
     public void nextAction(Client client, String option, AtomicInteger idx) {
         switch (option) {
-            case "e": PantallaCistellaView pantallaCistellaView = new PantallaCistellaView(); pantallaCistellaView.deleteProducte(client, idx); break;
+            case "e": PantallaCistellaView.getInstance().deleteProducte(client, idx); break;
             case "p": PantallaPagamentController pantallaPagamentController = new PantallaPagamentController(); pantallaPagamentController.init(client); break;
             case "x": PantallaPrincipalController pantallaPrincipalController = new PantallaPrincipalController(); pantallaPrincipalController.init(client); break;
         }

@@ -4,7 +4,6 @@ import es.cc.esliceu.db.limbo.EnviadorEmail;
 import es.cc.esliceu.db.limbo.GeneradorHash;
 import es.cc.esliceu.db.limbo.dao.ClientDao;
 import es.cc.esliceu.db.limbo.dao.impl.ClientDaoImpl;
-import es.cc.esliceu.db.limbo.dao.impl.DBConnectionImpl;
 import es.cc.esliceu.db.limbo.model.Client;
 import es.cc.esliceu.db.limbo.views.PantallaRegistreView;
 
@@ -13,12 +12,11 @@ public class PantallaRegistreController {
     private final ClientDao clientDao;
 
     public PantallaRegistreController() {
-        this.clientDao = new ClientDaoImpl(DBConnectionImpl.getInstance());
+        this.clientDao = ClientDaoImpl.getInstance();
     }
 
     public void init() {
-        PantallaRegistreView pantallaRegistreView = new PantallaRegistreView();
-        pantallaRegistreView.init();
+        PantallaRegistreView.getInstance().init();
     }
 
     public boolean checkIfExistsUsername(String username) {

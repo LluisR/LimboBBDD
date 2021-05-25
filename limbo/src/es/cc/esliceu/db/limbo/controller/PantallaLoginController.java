@@ -3,7 +3,6 @@ package es.cc.esliceu.db.limbo.controller;
 import es.cc.esliceu.db.limbo.GeneradorHash;
 import es.cc.esliceu.db.limbo.dao.ClientDao;
 import es.cc.esliceu.db.limbo.dao.impl.ClientDaoImpl;
-import es.cc.esliceu.db.limbo.dao.impl.DBConnectionImpl;
 import es.cc.esliceu.db.limbo.model.Client;
 import es.cc.esliceu.db.limbo.views.PantallaLoginView;
 
@@ -12,12 +11,11 @@ public class PantallaLoginController {
     private final ClientDao clientDao;
 
     public PantallaLoginController() {
-        this.clientDao = new ClientDaoImpl(DBConnectionImpl.getInstance());
+        this.clientDao = ClientDaoImpl.getInstance();
     }
 
     public void init() {
-        PantallaLoginView pantallaLoginView = new PantallaLoginView();
-        pantallaLoginView.init();
+        PantallaLoginView.getInstance().init();
     }
 
     public Client checkIfExistsUsername(String username) {

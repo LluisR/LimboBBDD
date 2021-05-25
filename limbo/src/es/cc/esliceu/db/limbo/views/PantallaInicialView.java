@@ -8,9 +8,10 @@ import java.util.Scanner;
 
 public class PantallaInicialView {
 
+    private static PantallaInicialView instance;
     private final PantallaInicialController controller;
 
-    public PantallaInicialView () {
+    private PantallaInicialView () {
         this.controller = new PantallaInicialController();
     }
 
@@ -31,5 +32,12 @@ public class PantallaInicialView {
             option = scanner.nextLine().toLowerCase();
         }
         controller.nextPage(option);
+    }
+
+    public synchronized static PantallaInicialView getInstance() {
+        if (instance == null) {
+            instance = new PantallaInicialView();
+        }
+        return instance;
     }
 }

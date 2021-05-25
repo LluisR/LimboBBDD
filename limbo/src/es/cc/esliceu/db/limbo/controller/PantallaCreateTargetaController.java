@@ -1,7 +1,6 @@
 package es.cc.esliceu.db.limbo.controller;
 
 import es.cc.esliceu.db.limbo.dao.TargetaDao;
-import es.cc.esliceu.db.limbo.dao.impl.DBConnectionImpl;
 import es.cc.esliceu.db.limbo.dao.impl.TargetaDaoImpl;
 import es.cc.esliceu.db.limbo.model.Client;
 import es.cc.esliceu.db.limbo.model.Targeta;
@@ -17,12 +16,11 @@ public class PantallaCreateTargetaController {
     private final TargetaDao targetaDao;
 
     public PantallaCreateTargetaController() {
-        this.targetaDao = new TargetaDaoImpl(DBConnectionImpl.getInstance());
+        this.targetaDao = TargetaDaoImpl.getInstance();
     }
 
     public void init(Client client, String from) {
-        PantallaCreateTargetaView pantallaCreateTargetaView = new PantallaCreateTargetaView();
-        pantallaCreateTargetaView.init(client, from);
+        PantallaCreateTargetaView.getInstance().init(client, from);
     }
 
     public void saveNewTargeta (Client client, String tipus, Long numero, String dataCaducitat, Integer codiSeguretat) {

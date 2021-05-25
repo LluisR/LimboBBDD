@@ -2,11 +2,9 @@ package es.cc.esliceu.db.limbo.controller;
 
 import es.cc.esliceu.db.limbo.dao.AdrecaDao;
 import es.cc.esliceu.db.limbo.dao.impl.AdrecaDaoImpl;
-import es.cc.esliceu.db.limbo.dao.impl.DBConnectionImpl;
 import es.cc.esliceu.db.limbo.model.Adreca;
 import es.cc.esliceu.db.limbo.model.Ciutat;
 import es.cc.esliceu.db.limbo.model.Client;
-import es.cc.esliceu.db.limbo.model.Targeta;
 import es.cc.esliceu.db.limbo.views.PantallaCreateAdrecaView;
 
 public class PantallaCreateAdrecaController {
@@ -14,12 +12,11 @@ public class PantallaCreateAdrecaController {
     private final AdrecaDao adrecaDao;
 
     public PantallaCreateAdrecaController() {
-        this.adrecaDao = new AdrecaDaoImpl(DBConnectionImpl.getInstance());
+        this.adrecaDao = AdrecaDaoImpl.getInstance();
     }
 
     public void init(Client client, String from) {
-        PantallaCreateAdrecaView pantallaCreateAdrecaView = new PantallaCreateAdrecaView();
-        pantallaCreateAdrecaView.init(client, from);
+        PantallaCreateAdrecaView.getInstance().init(client, from);
     }
 
     public void saveNewAdreca(Client client, String carrer, String numero, Integer pis, String porta, String cp) {

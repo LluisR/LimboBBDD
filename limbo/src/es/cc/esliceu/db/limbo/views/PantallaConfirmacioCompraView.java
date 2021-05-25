@@ -10,9 +10,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class PantallaConfirmacioCompraView {
 
+    private static PantallaConfirmacioCompraView instance;
     private final PantallaConfirmacioCompraController controller;
 
-    public PantallaConfirmacioCompraView () {
+    private PantallaConfirmacioCompraView () {
         this.controller = new PantallaConfirmacioCompraController();
     }
 
@@ -50,5 +51,12 @@ public class PantallaConfirmacioCompraView {
         System.out.println("Pulsi qualsevol botó per continuar");
         scanner.nextLine();
         this.controller.goHome(client);
+    }
+
+    public synchronized static PantallaConfirmacioCompraView getInstance() {
+        if (instance == null) {
+            instance = new PantallaConfirmacioCompraView();
+        }
+        return instance;
     }
 }

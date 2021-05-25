@@ -10,10 +10,10 @@ import java.util.Collection;
 
 public class DetallCompraDaoImpl implements DetallCompraDao {
 
+    private static DetallCompraDaoImpl instance;
     private DBConnection connection;
 
-    public DetallCompraDaoImpl(DBConnection dbConnection) {
-
+    private DetallCompraDaoImpl(DBConnection dbConnection) {
         this.connection = dbConnection;
     }
 
@@ -108,4 +108,12 @@ public class DetallCompraDaoImpl implements DetallCompraDao {
         }
         return null;
     }
+
+    public synchronized static DetallCompraDaoImpl getInstance() {
+        if (instance == null) {
+            instance = new DetallCompraDaoImpl(DBConnectionImpl.getInstance());
+        }
+        return instance;
+    }
+
 }

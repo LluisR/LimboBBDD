@@ -1,6 +1,5 @@
 package es.cc.esliceu.db.limbo.views;
 
-import es.cc.esliceu.db.limbo.controller.PantallaInicialController;
 import es.cc.esliceu.db.limbo.controller.PantallaPrincipalController;
 import es.cc.esliceu.db.limbo.model.Client;
 import es.cc.esliceu.db.limbo.model.Producte;
@@ -13,9 +12,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class PantallaPrincipalView {
 
+    private static PantallaPrincipalView instance;
     private final PantallaPrincipalController controller;
 
-    public PantallaPrincipalView () {
+    private PantallaPrincipalView () {
         this.controller = new PantallaPrincipalController();
     }
 
@@ -54,4 +54,12 @@ public class PantallaPrincipalView {
         }
         this.controller.nextPage(option, client);
     }
+
+    public synchronized static PantallaPrincipalView getInstance() {
+        if (instance == null) {
+            instance = new PantallaPrincipalView();
+        }
+        return instance;
+    }
+
 }

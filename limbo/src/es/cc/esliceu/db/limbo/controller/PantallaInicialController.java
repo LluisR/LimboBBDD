@@ -5,8 +5,7 @@ import es.cc.esliceu.db.limbo.views.PantallaInicialView;
 public class PantallaInicialController {
 
     public void init() {
-        PantallaInicialView pantallaInicialView = new PantallaInicialView();
-        pantallaInicialView.init();
+        PantallaInicialView.getInstance().init();
     }
 
     public void nextPage(String option) {

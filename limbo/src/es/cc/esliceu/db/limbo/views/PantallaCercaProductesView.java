@@ -12,9 +12,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class PantallaCercaProductesView {
 
+    private static PantallaCercaProductesView instance;
     private final PantallaCercaProductesController controller;
 
-    public PantallaCercaProductesView () {
+    private PantallaCercaProductesView () {
         this.controller = new PantallaCercaProductesController();
     }
 
@@ -104,5 +105,12 @@ public class PantallaCercaProductesView {
             System.out.println(Color.YELLOW_BRIGHT + "" + idx + Color.RESET + "   " + producte.getDescripcio() + "   " + Color.CYAN_BRIGHT +producte.getNom() + "  " + Color.BLUE_BOLD + producte.getPvp() + "€");
             idx.set(idx.get() + 1);
         });
+    }
+
+    public synchronized static PantallaCercaProductesView getInstance() {
+        if (instance == null) {
+            instance = new PantallaCercaProductesView();
+        }
+        return instance;
     }
 }

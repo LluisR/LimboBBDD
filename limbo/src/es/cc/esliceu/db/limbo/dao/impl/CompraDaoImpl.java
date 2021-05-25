@@ -11,10 +11,10 @@ import java.util.Collection;
 
 public class CompraDaoImpl implements CompraDao {
 
+    private static CompraDaoImpl instance;
     private DBConnection connection;
 
-    public CompraDaoImpl(DBConnection dbConnection) {
-
+    private CompraDaoImpl(DBConnection dbConnection) {
         this.connection = dbConnection;
     }
 
@@ -170,5 +170,12 @@ public class CompraDaoImpl implements CompraDao {
         }
 
         return null;
+    }
+
+    public synchronized static CompraDaoImpl getInstance() {
+        if (instance == null) {
+            instance = new CompraDaoImpl(DBConnectionImpl.getInstance());
+        }
+        return instance;
     }
 }

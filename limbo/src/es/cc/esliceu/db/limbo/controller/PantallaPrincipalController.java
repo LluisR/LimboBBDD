@@ -19,14 +19,13 @@ public class PantallaPrincipalController {
     private final DescompteProducteDao descompteProducteDao;
 
     public PantallaPrincipalController() {
-        this.producteDao = new ProducteDaoImpl(DBConnectionImpl.getInstance());
-        this.descompteDao = new DescompteDaoImpl(DBConnectionImpl.getInstance());
-        this.descompteClientDao = new DescompteClientDaoImpl(DBConnectionImpl.getInstance());
-        this.descompteProducteDao = new DescompteProducteDaoImpl(DBConnectionImpl.getInstance());
+        this.producteDao = ProducteDaoImpl.getInstance();
+        this.descompteDao = DescompteDaoImpl.getInstance();
+        this.descompteClientDao = DescompteClientDaoImpl.getInstance();
+        this.descompteProducteDao = DescompteProducteDaoImpl.getInstance();
     }
 
     public void init(Client client) {
-        PantallaPrincipalView pantallaPrincipalView = new PantallaPrincipalView();
         if (client.getCompra() == null) {
             Compra compra = new Compra();
             compra.setClient(client);
@@ -36,7 +35,7 @@ public class PantallaPrincipalController {
             client.setDescomptes(this.getDiscounts(client));
         }
         Collection<Producte> suggestedProducts = this.getProductesSuggerits();
-        pantallaPrincipalView.init(client, suggestedProducts);
+        PantallaPrincipalView.getInstance().init(client, suggestedProducts);
     }
 
     public Collection<Producte> getProductesSuggerits() {

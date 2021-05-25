@@ -1,7 +1,6 @@
 package es.cc.esliceu.db.limbo.views;
 
 import es.cc.esliceu.db.limbo.controller.PantallaPagamentController;
-import es.cc.esliceu.db.limbo.model.Adreca;
 import es.cc.esliceu.db.limbo.model.Client;
 import es.cc.esliceu.db.limbo.model.Targeta;
 import es.cc.esliceu.db.limbo.util.Color;
@@ -12,9 +11,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class PantallaPagamentView {
 
+    private static PantallaPagamentView instance;
     private final PantallaPagamentController controller;
 
-    public PantallaPagamentView () {
+    private PantallaPagamentView () {
         this.controller = new PantallaPagamentController();
     }
 
@@ -72,5 +72,12 @@ public class PantallaPagamentView {
             this.controller.deleteTargeta((Targeta)client.getTargetes().toArray()[Integer.parseInt(deleteTargeta)]);
         }
         this.controller.nextAction(client, option);
+    }
+
+    public synchronized static PantallaPagamentView getInstance() {
+        if (instance == null) {
+            instance = new PantallaPagamentView();
+        }
+        return instance;
     }
 }

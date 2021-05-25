@@ -10,9 +10,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class PantallaCistellaView {
 
+    private static PantallaCistellaView instance;
     private final PantallaCistellaController controller;
 
-    public PantallaCistellaView () {
+    private PantallaCistellaView () {
         this.controller = new PantallaCistellaController();
     }
 
@@ -59,5 +60,12 @@ public class PantallaCistellaView {
             }
         }
         this.controller.dropProduct(client, (DetallCompra) client.getCompra().getProductes().toArray()[select], unitats);
+    }
+
+    public synchronized static PantallaCistellaView getInstance() {
+        if (instance == null) {
+            instance = new PantallaCistellaView();
+        }
+        return instance;
     }
 }

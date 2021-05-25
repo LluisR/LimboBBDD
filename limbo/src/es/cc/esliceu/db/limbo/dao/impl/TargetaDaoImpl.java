@@ -11,10 +11,10 @@ import java.util.Collection;
 
 public class TargetaDaoImpl implements TargetaDao {
 
+    private static TargetaDaoImpl instance;
     private DBConnection connection;
 
-    public TargetaDaoImpl(DBConnection dbConnection) {
-
+    private TargetaDaoImpl(DBConnection dbConnection) {
         this.connection = dbConnection;
     }
 
@@ -138,5 +138,12 @@ public class TargetaDaoImpl implements TargetaDao {
         }
 
         return null;
+    }
+
+    public synchronized static TargetaDaoImpl getInstance() {
+        if (instance == null) {
+            instance = new TargetaDaoImpl(DBConnectionImpl.getInstance());
+        }
+        return instance;
     }
 }

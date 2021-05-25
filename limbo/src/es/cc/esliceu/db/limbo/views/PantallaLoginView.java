@@ -9,9 +9,10 @@ import java.util.Scanner;
 
 public class PantallaLoginView {
 
+    private static PantallaLoginView instance;
     private final PantallaLoginController controller;
 
-    public PantallaLoginView() {
+    private PantallaLoginView() {
         this.controller = new PantallaLoginController();
     }
 
@@ -49,4 +50,13 @@ public class PantallaLoginView {
         Notifications.info("LOGIN COMPLET!");
         this.controller.loginSuccessful(client);
     }
+
+
+    public synchronized static PantallaLoginView getInstance() {
+        if (instance == null) {
+            instance = new PantallaLoginView();
+        }
+        return instance;
+    }
+
 }

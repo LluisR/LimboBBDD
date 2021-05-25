@@ -14,14 +14,13 @@ public class PantallaCercaProductesController {
     private final CategoriaDao categoriaDao;
 
     public PantallaCercaProductesController() {
-        this.producteDao = new ProducteDaoImpl(DBConnectionImpl.getInstance());
-        this.categoriaDao = new CategoriaDaoImpl(DBConnectionImpl.getInstance());
+        this.producteDao = ProducteDaoImpl.getInstance();
+        this.categoriaDao = CategoriaDaoImpl.getInstance();
     }
 
     public void init(Client client) {
-        PantallaCercaProductesView pantallaCercaProductesView = new PantallaCercaProductesView();
         Collection<Categoria> categories = this.categoriaDao.findAll();
-        pantallaCercaProductesView.init(client, categories);
+        PantallaCercaProductesView.getInstance().init(client, categories);
     }
 
     public void searchProducts(Client client, String nom, String descripcio, String marca, String categoria) {
@@ -54,8 +53,7 @@ public class PantallaCercaProductesController {
         }
 
         Collection<Producte> productes = this.producteDao.findWithFilters(mapaFiltres, sql, nom, descripcio, marca, categoria);
-        PantallaCercaProductesView pantallaCercaProductesView = new PantallaCercaProductesView();
-        pantallaCercaProductesView.resultProducts(client, productes);
+        PantallaCercaProductesView.getInstance().resultProducts(client, productes);
 
     }
 

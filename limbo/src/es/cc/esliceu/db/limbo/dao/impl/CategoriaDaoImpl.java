@@ -11,10 +11,10 @@ import java.util.Collection;
 
 public class CategoriaDaoImpl implements CategoriaDao {
 
+    private static CategoriaDaoImpl instance;
     private DBConnection connection;
 
-    public CategoriaDaoImpl(DBConnection dbConnection) {
-
+    private CategoriaDaoImpl(DBConnection dbConnection) {
         this.connection = dbConnection;
     }
 
@@ -68,5 +68,12 @@ public class CategoriaDaoImpl implements CategoriaDao {
     @Override
     public void update(Categoria categoria) {
 
+    }
+
+    public synchronized static CategoriaDaoImpl getInstance() {
+        if (instance == null) {
+            instance = new CategoriaDaoImpl(DBConnectionImpl.getInstance());
+        }
+        return instance;
     }
 }

@@ -20,14 +20,13 @@ public class PantallaClientController {
     private final CompraDao compraDao;
 
     public PantallaClientController() {
-        this.adrecaDao = new AdrecaDaoImpl(DBConnectionImpl.getInstance());
-        this.targetaDao = new TargetaDaoImpl(DBConnectionImpl.getInstance());
-        this.compraDao = new CompraDaoImpl(DBConnectionImpl.getInstance());
+        this.adrecaDao = AdrecaDaoImpl.getInstance();
+        this.targetaDao = TargetaDaoImpl.getInstance();
+        this.compraDao = CompraDaoImpl.getInstance();
     }
 
     public void init(Client client) {
-        PantallaClientView pantallaClientView = new PantallaClientView();
-        pantallaClientView.init(client);
+        PantallaClientView.getInstance().init(client);
     }
 
     public void nextAction(Client client, String option) {
@@ -38,8 +37,8 @@ public class PantallaClientController {
         switch (option) {
             case "d": pantallaSettingsController.init(client); break;
             case "c": PantallaCompresRealitzadesController pantallaCompresRealitzadesController = new PantallaCompresRealitzadesController(); pantallaCompresRealitzadesController.init(client); break;
-            case "a": PantallaClientView pantallaClientView = new PantallaClientView(); client.setAdreces(this.adrecaDao.findAllByIdClient(client)); pantallaClientView.showAdress(client); break;
-            case "t": PantallaClientView pantallaClientView1 = new PantallaClientView(); client.setTargetes(this.targetaDao.findByIdClient(client)); pantallaClientView1.showTargetes(client); break;
+            case "a": client.setAdreces(this.adrecaDao.findAllByIdClient(client)); PantallaClientView.getInstance().showAdress(client); break;
+            case "t": client.setTargetes(this.targetaDao.findByIdClient(client)); PantallaClientView.getInstance().showTargetes(client); break;
             case "x": PantallaPrincipalController pantallaPrincipalController = new PantallaPrincipalController(); pantallaPrincipalController.init(client); break;
         }
     }

@@ -11,9 +11,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class PantallaEnviamentView {
 
+    private static PantallaEnviamentView instance;
     private final PantallaEnviamentController controller;
 
-    public PantallaEnviamentView () {
+    private PantallaEnviamentView () {
         this.controller = new PantallaEnviamentController();
     }
 
@@ -68,5 +69,12 @@ public class PantallaEnviamentView {
             this.controller.deleteAdress((Adreca)client.getAdreces().toArray()[Integer.parseInt(deleteAdress)]);
         }
         this.controller.nextAction(client, option);
+    }
+
+    public synchronized static PantallaEnviamentView getInstance() {
+        if (instance == null) {
+            instance = new PantallaEnviamentView();
+        }
+        return instance;
     }
 }

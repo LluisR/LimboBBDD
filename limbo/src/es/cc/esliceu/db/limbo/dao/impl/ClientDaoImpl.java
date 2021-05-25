@@ -9,10 +9,10 @@ import java.util.Collection;
 
 public class ClientDaoImpl implements ClientDao {
 
+    private static ClientDaoImpl instance;
     private DBConnection connection;
 
-    public ClientDaoImpl(DBConnection dbConnection) {
-
+    private ClientDaoImpl(DBConnection dbConnection) {
         this.connection = dbConnection;
     }
 
@@ -180,5 +180,12 @@ public class ClientDaoImpl implements ClientDao {
                 e.printStackTrace();
             }
         }
+    }
+
+    public synchronized static ClientDaoImpl getInstance() {
+        if (instance == null) {
+            instance = new ClientDaoImpl(DBConnectionImpl.getInstance());
+        }
+        return instance;
     }
 }

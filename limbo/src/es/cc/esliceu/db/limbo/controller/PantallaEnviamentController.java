@@ -15,15 +15,14 @@ public class PantallaEnviamentController {
     private final CompraDao compraDao;
 
     public PantallaEnviamentController() {
-        this.adrecaDao = new AdrecaDaoImpl(DBConnectionImpl.getInstance());
-        this.compraDao = new CompraDaoImpl(DBConnectionImpl.getInstance());
+        this.adrecaDao = AdrecaDaoImpl.getInstance();
+        this.compraDao = CompraDaoImpl.getInstance();
     }
 
     public void init(Client client) {
-        PantallaEnviamentView pantallaEnviamentView = new PantallaEnviamentView();
         Collection<Adreca> adreces = this.adrecaDao.findAllByIdClient(client);
         client.setAdreces(adreces);
-        pantallaEnviamentView.init(client);
+        PantallaEnviamentView.getInstance().init(client);
     }
 
     public void nextAction(Client client, String option) {

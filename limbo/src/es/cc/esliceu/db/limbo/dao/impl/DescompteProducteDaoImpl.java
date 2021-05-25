@@ -11,10 +11,10 @@ import java.util.Collection;
 
 public class DescompteProducteDaoImpl implements DescompteProducteDao {
 
+    private static DescompteProducteDaoImpl instance;
     private DBConnection connection;
 
-    public DescompteProducteDaoImpl(DBConnection dbConnection) {
-
+    private DescompteProducteDaoImpl(DBConnection dbConnection) {
         this.connection = dbConnection;
     }
 
@@ -80,5 +80,12 @@ public class DescompteProducteDaoImpl implements DescompteProducteDao {
         }
 
         return null;
+    }
+
+    public synchronized static DescompteProducteDaoImpl getInstance() {
+        if (instance == null) {
+            instance = new DescompteProducteDaoImpl(DBConnectionImpl.getInstance());
+        }
+        return instance;
     }
 }

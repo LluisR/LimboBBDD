@@ -11,17 +11,15 @@ public class PantallaAjudaController {
     private final ProducteDao producteDao;
 
     public PantallaAjudaController() {
-        this.producteDao = new ProducteDaoImpl(DBConnectionImpl.getInstance());
+        this.producteDao = ProducteDaoImpl.getInstance();
     }
 
     public void init(Client client) {
-        PantallaAjudaView pantallaAjudaView = new PantallaAjudaView();
-        pantallaAjudaView.init(client);
+        PantallaAjudaView.getInstance().init(client);
     }
 
     public void init() {
-        PantallaAjudaView pantallaAjudaView = new PantallaAjudaView();
-        pantallaAjudaView.init(null);
+        PantallaAjudaView.getInstance().init(null);
     }
 
     public void goBack(Client client) {

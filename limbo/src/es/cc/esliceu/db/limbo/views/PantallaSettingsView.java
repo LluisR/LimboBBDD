@@ -12,9 +12,10 @@ import java.util.Scanner;
 
 public class PantallaSettingsView {
 
+    private static PantallaSettingsView instance;
     private final PantallaSettingsController controller;
 
-    public PantallaSettingsView () {
+    private PantallaSettingsView () {
         this.controller = new PantallaSettingsController();
     }
 
@@ -93,5 +94,12 @@ public class PantallaSettingsView {
         while (!referencia.equals(scanner.nextLine())) {
             Notifications.errada("El codi de referència no coincideix... per favor, torna a intentar-ho.");
         }
+    }
+
+    public synchronized static PantallaSettingsView getInstance() {
+        if (instance == null) {
+            instance = new PantallaSettingsView();
+        }
+        return instance;
     }
 }

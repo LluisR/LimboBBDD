@@ -9,9 +9,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class PantallaCompresRealitzadesView {
 
+    private static PantallaCompresRealitzadesView instance;
     private final PantallaCompresRealitzadesController controller;
 
-    public PantallaCompresRealitzadesView () {
+    private PantallaCompresRealitzadesView () {
         this.controller = new PantallaCompresRealitzadesController();
     }
 
@@ -36,5 +37,12 @@ public class PantallaCompresRealitzadesView {
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine();
         this.controller.goBack(client);
+    }
+
+    public synchronized static PantallaCompresRealitzadesView getInstance() {
+        if (instance == null) {
+            instance = new PantallaCompresRealitzadesView();
+        }
+        return instance;
     }
 }

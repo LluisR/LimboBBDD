@@ -3,7 +3,6 @@ package es.cc.esliceu.db.limbo.dao.impl;
 import es.cc.esliceu.db.limbo.dao.DBConnection;
 import es.cc.esliceu.db.limbo.dao.ProducteDao;
 import es.cc.esliceu.db.limbo.model.Categoria;
-import es.cc.esliceu.db.limbo.model.DetallCompra;
 import es.cc.esliceu.db.limbo.model.Producte;
 
 import java.sql.PreparedStatement;
@@ -15,10 +14,10 @@ import java.util.Map;
 
 public class ProducteDaoImpl implements ProducteDao {
 
+    private static ProducteDaoImpl instance;
     private DBConnection connection;
 
-    public ProducteDaoImpl(DBConnection dbConnection) {
-
+    private ProducteDaoImpl(DBConnection dbConnection) {
         this.connection = dbConnection;
     }
 
@@ -183,5 +182,12 @@ public class ProducteDaoImpl implements ProducteDao {
             }
         }
         return null;
+    }
+
+    public synchronized static ProducteDaoImpl getInstance() {
+        if (instance == null) {
+            instance = new ProducteDaoImpl(DBConnectionImpl.getInstance());
+        }
+        return instance;
     }
 }

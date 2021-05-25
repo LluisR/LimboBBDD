@@ -8,9 +8,10 @@ import java.util.Scanner;
 
 public class PantallaRegistreView {
 
+    private static PantallaRegistreView instance;
     private final PantallaRegistreController controller;
 
-    public PantallaRegistreView() {
+    private PantallaRegistreView() {
         this.controller = new PantallaRegistreController();
     }
 
@@ -57,5 +58,12 @@ public class PantallaRegistreView {
             this.controller.registerSuccessful();
         }
         else Notifications.errada("Hi ha hagut un problema amb el registre del nou usuari...");
+    }
+
+    public synchronized static PantallaRegistreView getInstance() {
+        if (instance == null) {
+            instance = new PantallaRegistreView();
+        }
+        return instance;
     }
 }

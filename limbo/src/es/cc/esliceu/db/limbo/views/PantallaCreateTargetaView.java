@@ -1,19 +1,18 @@
 package es.cc.esliceu.db.limbo.views;
 
-import com.sun.tools.corba.se.idl.constExpr.Not;
 import es.cc.esliceu.db.limbo.controller.PantallaCreateTargetaController;
 import es.cc.esliceu.db.limbo.model.Client;
 import es.cc.esliceu.db.limbo.util.Color;
 import es.cc.esliceu.db.limbo.util.Notifications;
 
-import java.sql.Date;
 import java.util.Scanner;
 
 public class PantallaCreateTargetaView {
 
+    private static PantallaCreateTargetaView instance;
     private final PantallaCreateTargetaController controller;
 
-    public PantallaCreateTargetaView () {
+    private PantallaCreateTargetaView () {
         this.controller = new PantallaCreateTargetaController();
     }
 
@@ -74,6 +73,13 @@ public class PantallaCreateTargetaView {
         this.controller.saveNewTargeta(client, tipus, Long.parseLong(numero), dataCaducitat, Integer.parseInt(codiSeguretat));
         Notifications.info("Targeta afegida correctament!");
         this.controller.nextAction(client, from);
+    }
+
+    public synchronized static PantallaCreateTargetaView getInstance() {
+        if (instance == null) {
+            instance = new PantallaCreateTargetaView();
+        }
+        return instance;
     }
 
 }

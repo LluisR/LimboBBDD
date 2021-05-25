@@ -18,14 +18,13 @@ public class PantallaConfirmacioCompraController {
     private final DetallCompraDao detallCompraDao;
 
     public PantallaConfirmacioCompraController() {
-        this.compraDao = new CompraDaoImpl(DBConnectionImpl.getInstance());
-        this.detallCompraDao = new DetallCompraDaoImpl(DBConnectionImpl.getInstance());
+        this.compraDao = CompraDaoImpl.getInstance();
+        this.detallCompraDao = DetallCompraDaoImpl.getInstance();
     }
 
     public void init(Client client) {
-        PantallaConfirmacioCompraView pantallaConfirmacioCompraView = new PantallaConfirmacioCompraView();
         client.setCompres(this.compraDao.findByIdClient(client));
-        pantallaConfirmacioCompraView.init(client);
+        PantallaConfirmacioCompraView.getInstance().init(client);
     }
 
     public void nextAction(Client client, String option) {
@@ -52,8 +51,7 @@ public class PantallaConfirmacioCompraController {
         });
         String resum = generaResumEmail(client);
         EnviadorEmail.enviaEmail(client.getEmail(), "Confirmació de compra: " + client.getCompra().getId_transaccio(), resum);
-        PantallaConfirmacioCompraView pantallaConfirmacioCompraView = new PantallaConfirmacioCompraView();
-        pantallaConfirmacioCompraView.confirmacioCompra(client);
+        PantallaConfirmacioCompraView.getInstance().confirmacioCompra(client);
     }
 
     private String generaResumEmail(Client client) {

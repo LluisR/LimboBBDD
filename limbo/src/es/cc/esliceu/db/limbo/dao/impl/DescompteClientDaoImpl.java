@@ -11,10 +11,10 @@ import java.util.Collection;
 
 public class DescompteClientDaoImpl implements DescompteClientDao {
 
+    private static DescompteClientDaoImpl instance;
     private DBConnection connection;
 
-    public DescompteClientDaoImpl(DBConnection dbConnection) {
-
+    private DescompteClientDaoImpl(DBConnection dbConnection) {
         this.connection = dbConnection;
     }
 
@@ -81,5 +81,12 @@ public class DescompteClientDaoImpl implements DescompteClientDao {
         }
 
         return null;
+    }
+
+    public synchronized static DescompteClientDaoImpl getInstance() {
+        if (instance == null) {
+            instance = new DescompteClientDaoImpl(DBConnectionImpl.getInstance());
+        }
+        return instance;
     }
 }

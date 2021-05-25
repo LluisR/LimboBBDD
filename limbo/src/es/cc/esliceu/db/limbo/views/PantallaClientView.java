@@ -10,9 +10,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class PantallaClientView {
 
+    private static PantallaClientView instance;
     private final PantallaClientController controller;
 
-    public PantallaClientView () {
+    private PantallaClientView () {
         this.controller = new PantallaClientController();
     }
 
@@ -120,6 +121,13 @@ public class PantallaClientView {
             this.controller.deleteTargeta(client, Integer.parseInt(indexTargeta));
         }
         this.controller.nextTargetesAction(client, option);
+    }
+
+    public synchronized static PantallaClientView getInstance() {
+        if (instance == null) {
+            instance = new PantallaClientView();
+        }
+        return instance;
     }
 
 }
