@@ -58,7 +58,6 @@ public class PantallaPrincipalController {
             descompteProductes.forEach(descompteProducte -> {
                 Producte producte = this.producteDao.findById(descompteProducte.getProducte().getId());
                 productes.add(producte);
-                System.out.println(producte);
             });
             descompteProducteMap.put(descompte, productes);
         });

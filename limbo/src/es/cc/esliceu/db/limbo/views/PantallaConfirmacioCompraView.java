@@ -3,9 +3,9 @@ package es.cc.esliceu.db.limbo.views;
 import es.cc.esliceu.db.limbo.controller.PantallaConfirmacioCompraController;
 import es.cc.esliceu.db.limbo.model.Client;
 import es.cc.esliceu.db.limbo.util.Color;
+import es.cc.esliceu.db.limbo.util.MyScan;
 import es.cc.esliceu.db.limbo.util.Notifications;
 
-import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class PantallaConfirmacioCompraView {
@@ -36,20 +36,18 @@ public class PantallaConfirmacioCompraView {
         System.out.println("Amb la adreça d'enviament:");
         System.out.println(Color.CYAN_BOLD + "     " + client.getCompra().getAdreca().getCarrer() + " " + client.getCompra().getAdreca().getNumero() + " " + client.getCompra().getAdreca().getCp() + Color.RESET);
         System.out.println(Color.YELLOW_BACKGROUND + "Desitja continuar amb el pagament (s/n)?" +Color.RESET);
-        Scanner scanner = new Scanner(System.in);
-        String option = scanner.nextLine().toLowerCase();
+        String option = MyScan.getInstance().getScanner().nextLine().toLowerCase();
         while (!option.equals("s") && !option.equals("n")) {
             Notifications.errada("Opció no vàlida. Torna a intentar-ho");
-            option = scanner.nextLine().toLowerCase();
+            option = MyScan.getInstance().getScanner().nextLine().toLowerCase();
         }
         this.controller.nextAction(client, option);
     }
 
     public void confirmacioCompra(Client client) {
         Notifications.info("COMPRA REALITZADA CORRECTAMENT. S'ha enviat la factura a " + client.getEmail() + ". " + "Amb ID de transacció: " + client.getCompra().getId_transaccio());
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Pulsi qualsevol botó per continuar");
-        scanner.nextLine();
+        MyScan.getInstance().getScanner().nextLine();
         this.controller.goHome(client);
     }
 

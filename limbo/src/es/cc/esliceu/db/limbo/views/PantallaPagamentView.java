@@ -4,9 +4,9 @@ import es.cc.esliceu.db.limbo.controller.PantallaPagamentController;
 import es.cc.esliceu.db.limbo.model.Client;
 import es.cc.esliceu.db.limbo.model.Targeta;
 import es.cc.esliceu.db.limbo.util.Color;
+import es.cc.esliceu.db.limbo.util.MyScan;
 import es.cc.esliceu.db.limbo.util.Notifications;
 
-import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class PantallaPagamentView {
@@ -48,9 +48,8 @@ public class PantallaPagamentView {
             System.out.println("b) Esborrar targeta");
         }
         System.out.println("x) Sortir");
-        Scanner scanner = new Scanner(System.in);
         System.out.println(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Esculli una opció" + Color.RESET);
-        String option = scanner.nextLine();
+        String option = MyScan.getInstance().getScanner().nextLine();
         while (!option.equals("a") && !option.equals("b") && !option.equals("x")) {
             if (option.matches("\\d*")) {
                 if (Integer.parseInt(option) < client.getTargetes().size()) {
@@ -59,15 +58,15 @@ public class PantallaPagamentView {
             }
             Notifications.errada("No has seleccionat una opció valida. Torna a intentar-ho.");
             System.out.print(Color.YELLOW_BACKGROUND + "Esculli una opció: " + Color.RESET);
-            option = scanner.nextLine();
+            option = MyScan.getInstance().getScanner().nextLine();
         }
         if (option.equals("b")) {
             System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Indiqui el número índex de la targeta que vol esborrar: " + Color.RESET);
-            String deleteTargeta = scanner.nextLine();
+            String deleteTargeta = MyScan.getInstance().getScanner().nextLine();
             while (!deleteTargeta.matches("\\d*") || Integer.parseInt(deleteTargeta) >= client.getTargetes().size()) {
                 Notifications.errada("El número introduit no es vàlid. Torna a intentar-ho");
                 System.out.print(Color.YELLOW_BACKGROUND +  "" + Color.BLACK_BOLD + "Indiqui el número índex de la targeta que vol esborrar: " + Color.RESET);
-                deleteTargeta = scanner.nextLine();
+                deleteTargeta = MyScan.getInstance().getScanner().nextLine();
             }
             this.controller.deleteTargeta((Targeta)client.getTargetes().toArray()[Integer.parseInt(deleteTargeta)]);
         }

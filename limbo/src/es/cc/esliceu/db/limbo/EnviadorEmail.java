@@ -41,7 +41,8 @@ public class EnviadorEmail {
                     InternetAddress.parse(to)
             );
             message.setSubject(subject);
-            message.setText(text);
+            message.setContent(text, "text/html; charset=UTF-8");
+            /*message.setText(text);*/
 
             Transport.send(message);
             System.out.println("Email enviat");

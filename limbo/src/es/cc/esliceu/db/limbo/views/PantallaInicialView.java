@@ -2,9 +2,8 @@ package es.cc.esliceu.db.limbo.views;
 
 import es.cc.esliceu.db.limbo.controller.PantallaInicialController;
 import es.cc.esliceu.db.limbo.util.Color;
+import es.cc.esliceu.db.limbo.util.MyScan;
 import es.cc.esliceu.db.limbo.util.Notifications;
-
-import java.util.Scanner;
 
 public class PantallaInicialView {
 
@@ -24,12 +23,11 @@ public class PantallaInicialView {
         System.out.println(Color.BLUE_BOLD_BRIGHT + "h) " + Color.RESET + "Ajuda");
         System.out.println(Color.BLUE_BOLD_BRIGHT + "x) " + Color.RESET + "Sortir");
         System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "\t" + "Esculli una opció:" + Color.RESET + " ");
-        Scanner scanner = new Scanner(System.in);
-        String option = scanner.nextLine().toLowerCase();
+        String option = MyScan.getInstance().getScanner().nextLine().toLowerCase();
         while (!option.equals("1") && !option.equals("2") && !option.equals("h") && !option.equals("x")) {
             Notifications.errada("L'opció escollida no està disponible. Torna a intentar-ho");
             System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "\t" + "Esculli una opció:" + Color.RESET + " ");
-            option = scanner.nextLine().toLowerCase();
+            option = MyScan.getInstance().getScanner().nextLine().toLowerCase();
         }
         controller.nextPage(option);
     }

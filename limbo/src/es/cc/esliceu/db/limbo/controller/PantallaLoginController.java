@@ -4,6 +4,7 @@ import es.cc.esliceu.db.limbo.GeneradorHash;
 import es.cc.esliceu.db.limbo.dao.ClientDao;
 import es.cc.esliceu.db.limbo.dao.impl.ClientDaoImpl;
 import es.cc.esliceu.db.limbo.model.Client;
+import es.cc.esliceu.db.limbo.views.PantallaInicialView;
 import es.cc.esliceu.db.limbo.views.PantallaLoginView;
 
 public class PantallaLoginController {
@@ -31,6 +32,10 @@ public class PantallaLoginController {
 
     public void loginSuccessful(Client client) {
         PantallaPrincipalController.getInstance().init(client);
+    }
+
+    public void goBack() {
+        PantallaInicialView.getInstance().init();
     }
 
     public synchronized static PantallaLoginController getInstance() {

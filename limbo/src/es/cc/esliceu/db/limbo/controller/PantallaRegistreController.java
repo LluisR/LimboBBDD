@@ -5,6 +5,7 @@ import es.cc.esliceu.db.limbo.GeneradorHash;
 import es.cc.esliceu.db.limbo.dao.ClientDao;
 import es.cc.esliceu.db.limbo.dao.impl.ClientDaoImpl;
 import es.cc.esliceu.db.limbo.model.Client;
+import es.cc.esliceu.db.limbo.views.PantallaInicialView;
 import es.cc.esliceu.db.limbo.views.PantallaRegistreView;
 
 public class PantallaRegistreController {
@@ -58,6 +59,10 @@ public class PantallaRegistreController {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void goBack() {
+        PantallaInicialView.getInstance().init();
     }
 
     public void registerSuccessful() {

@@ -4,10 +4,10 @@ import es.cc.esliceu.db.limbo.controller.PantallaPrincipalController;
 import es.cc.esliceu.db.limbo.model.Client;
 import es.cc.esliceu.db.limbo.model.Producte;
 import es.cc.esliceu.db.limbo.util.Color;
+import es.cc.esliceu.db.limbo.util.MyScan;
 import es.cc.esliceu.db.limbo.util.Notifications;
 
 import java.util.Collection;
-import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class PantallaPrincipalView {
@@ -40,17 +40,16 @@ public class PantallaPrincipalView {
         System.out.println(Color.RED_BOLD + "---------------    Descomptes Actius    ---------------" + Color.RESET);
         client.getDescomptes().forEach((descompte, productes) -> {
             productes.forEach(producte -> {
-                System.out.println(producte.getNom() + "  " + producte.getPvp() + "  " + Color.RED_UNDERLINED + descompte.getPercentatge() + "%" + Color.RESET + " caduca: " + descompte.getDataFi());
+                System.out.println(producte.getNom() + "  " + producte.getPvp() + "€  " + Color.RED_UNDERLINED + descompte.getPercentatge() + "%" + Color.RESET + " caduca: " + descompte.getDataFi());
             });
         });
         System.out.println(Color.RED_BOLD + "---------------------------------------------------------" + Color.RESET);
         System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "\t" + "Esculli una opció:" + Color.RESET + " ");
-        Scanner scanner = new Scanner(System.in);
-        String option = scanner.nextLine().toLowerCase();
+        String option = MyScan.getInstance().getScanner().nextLine().toLowerCase();
         while (!option.equals("c") && !option.equals("v") && !option.equals("d") && !option.equals("h") && !option.equals("x")) {
             Notifications.errada("No s'ha seleccionat una opció valida. Torna a intentar-ho!");
             System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "\t" + "Esculli una opció:" + Color.RESET + " ");
-            option = scanner.nextLine();
+            option = MyScan.getInstance().getScanner().nextLine();
         }
         this.controller.nextPage(option, client);
     }

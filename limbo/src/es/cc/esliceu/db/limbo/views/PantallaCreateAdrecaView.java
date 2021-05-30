@@ -2,11 +2,9 @@ package es.cc.esliceu.db.limbo.views;
 
 import es.cc.esliceu.db.limbo.controller.PantallaCreateAdrecaController;
 import es.cc.esliceu.db.limbo.model.Client;
-import es.cc.esliceu.db.limbo.model.Targeta;
 import es.cc.esliceu.db.limbo.util.Color;
+import es.cc.esliceu.db.limbo.util.MyScan;
 import es.cc.esliceu.db.limbo.util.Notifications;
-
-import java.util.Scanner;
 
 public class PantallaCreateAdrecaView {
 
@@ -22,7 +20,6 @@ public class PantallaCreateAdrecaView {
         System.out.println("**              Nova Adreca             **");
         System.out.println("Usuari: " + Color.RESET + client.getNom() + " " + client.getCognom1() + "    " + Color.RED_BRIGHT + client.getUsername() + Color.RESET);
         System.out.println(Color.YELLOW_BRIGHT + "*****************************************" + Color.RESET);
-        Scanner scanner = new Scanner(System.in);
         String option = "n";
         String carrer = null;
         String numero = null;
@@ -31,15 +28,15 @@ public class PantallaCreateAdrecaView {
         String cp = null;
         while (option.equals("n")) {
             System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Nom del carrer:" + Color.RESET + " ");
-            carrer = scanner.nextLine();
+            carrer = MyScan.getInstance().getScanner().nextLine();
             System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Numero:" + Color.RESET + " ");
-            numero = scanner.nextLine();
+            numero = MyScan.getInstance().getScanner().nextLine();
             System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Pis:" + Color.RESET + " ");
-            pis = scanner.nextLine();
+            pis = MyScan.getInstance().getScanner().nextLine();
             System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Porta:" + Color.RESET + " ");
-            porta = scanner.nextLine();
+            porta = MyScan.getInstance().getScanner().nextLine();
             System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "CP:" + Color.RESET + " ");
-            cp = scanner.nextLine();
+            cp = MyScan.getInstance().getScanner().nextLine();
             System.out.println("--------------------------------------");
             System.out.println("Revisa les dades següents:");
             System.out.println("Nom: " + carrer);
@@ -49,7 +46,7 @@ public class PantallaCreateAdrecaView {
             System.out.println("CP: " + cp);
             System.out.println("--------------------------------------");
             System.out.println("Es correcte? Si(s)/No(n)");
-            option = scanner.nextLine();
+            option = MyScan.getInstance().getScanner().nextLine();
         }
         this.controller.saveNewAdreca(client, carrer, numero, Integer.parseInt(pis), porta, cp);
         Notifications.info("Adreça afegida correctament!");

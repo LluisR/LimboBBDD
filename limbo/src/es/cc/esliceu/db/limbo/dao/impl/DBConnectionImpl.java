@@ -18,14 +18,13 @@ public class DBConnectionImpl implements DBConnection {
     private Connection connection;
 
     private DBConnectionImpl() {
-        Scanner scanner = new Scanner(System.in);
         String[] credentials = this.getCredentials();
         try {
             DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
             this.connection = DriverManager.getConnection(credentials[0], credentials[1], credentials[2]);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
 
     }

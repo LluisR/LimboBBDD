@@ -4,8 +4,8 @@ import es.cc.esliceu.db.limbo.controller.PantallaCistellaController;
 import es.cc.esliceu.db.limbo.model.Client;
 import es.cc.esliceu.db.limbo.model.DetallCompra;
 import es.cc.esliceu.db.limbo.util.Color;
+import es.cc.esliceu.db.limbo.util.MyScan;
 
-import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class PantallaCistellaView {
@@ -36,27 +36,25 @@ public class PantallaCistellaView {
         System.out.println("e) Eliminar Producte");
         System.out.println("p) Pagar");
         System.out.println("x) Sortir Cistella");
-        Scanner scanner = new Scanner(System.in);
-        String option = scanner.nextLine();
+        String option = MyScan.getInstance().getScanner().nextLine();
         this.controller.nextAction(client, option, idx);
     }
 
     public void deleteProducte(Client client, AtomicInteger idx) {
-        Scanner scanner = new Scanner(System.in);
         System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Tria el número de producte: " + Color.RESET);
-        Integer select = scanner.nextInt();
+        Integer select = MyScan.getInstance().getScanner().nextInt();
         while (select >= idx.get()) {
             System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Número erróni. Tria el número de producte de vell nou: " + Color.RESET);
-            select = scanner.nextInt();
+            select = MyScan.getInstance().getScanner().nextInt();
         }
-        scanner.nextLine();
+        MyScan.getInstance().getScanner().nextLine();
         DetallCompra producte = (DetallCompra) client.getCompra().getProductes().toArray()[select];
         System.out.println(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Quantes unitats: (<Enter> per eliminar-los tots)" + Color.RESET);
-        String unitats = scanner.nextLine();
+        String unitats = MyScan.getInstance().getScanner().nextLine();
         if (!unitats.equals("")) {
             while (Integer.parseInt(unitats) >= producte.getUnitats_producte()) {
                 System.out.println(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Quantitat errónea. Torna a escollir quantes unitats: (<Enter> per eliminar-los tots)" + Color.RESET);
-                unitats = scanner.nextLine();
+                unitats = MyScan.getInstance().getScanner().nextLine();
             }
         }
         this.controller.dropProduct(client, (DetallCompra) client.getCompra().getProductes().toArray()[select], unitats);

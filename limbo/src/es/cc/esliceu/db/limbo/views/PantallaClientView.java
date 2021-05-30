@@ -3,9 +3,9 @@ package es.cc.esliceu.db.limbo.views;
 import es.cc.esliceu.db.limbo.controller.PantallaClientController;
 import es.cc.esliceu.db.limbo.model.Client;
 import es.cc.esliceu.db.limbo.util.Color;
+import es.cc.esliceu.db.limbo.util.MyScan;
 import es.cc.esliceu.db.limbo.util.Notifications;
 
-import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class PantallaClientView {
@@ -28,12 +28,11 @@ public class PantallaClientView {
         System.out.println(Color.BLUE + "t) Targetes" + Color.RESET);
         System.out.println(Color.BLUE + "x) Sortir" + Color.RESET);
         System.out.print(Color.YELLOW_BACKGROUND + "Esculli una opció: " + Color.RESET);
-        Scanner scanner = new Scanner(System.in);
-        String option = scanner.nextLine().toLowerCase();
+        String option = MyScan.getInstance().getScanner().nextLine().toLowerCase();
         while (!option.equals("d") && !option.equals("c") && !option.equals("a") && !option.equals("t") && !option.equals("x")) {
             Notifications.errada("La opció escollida no es vàlida. Per favor, torna a intentar-ho");
             System.out.print(Color.YELLOW_BACKGROUND + "Esculli una opció: " + Color.RESET);
-            option = scanner.nextLine().toLowerCase();
+            option = MyScan.getInstance().getScanner().nextLine().toLowerCase();
         }
         this.controller.nextAction(client, option);
     }
@@ -60,20 +59,19 @@ public class PantallaClientView {
         }
         System.out.println("x) Sortir");
         System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Esculli una opció:" + Color.RESET + " ");
-        Scanner scanner = new Scanner(System.in);
-        String option = scanner.nextLine().toLowerCase();
+        String option = MyScan.getInstance().getScanner().nextLine().toLowerCase();
         while (!option.equals("a") && !option.equals("x") && !option.equals("b")) {
             Notifications.errada("La opció escollida no es vàlida. Torna a intentar-ho.");
             System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Esculli una opció:" + Color.RESET + " ");
-            option = scanner.nextLine().toLowerCase();
+            option = MyScan.getInstance().getScanner().nextLine().toLowerCase();
         }
         if (option.equals("b")) {
             System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Indiqui la posició de l'adreça que vol esborrar: " + Color.RESET + " ");
-            String indexAdress = scanner.nextLine();
+            String indexAdress = MyScan.getInstance().getScanner().nextLine();
             while (!indexAdress.matches("\\d*") && Integer.parseInt(indexAdress) > client.getAdreces().size()) {
                 Notifications.errada("L'index introduit no és vàlid. Torna a intentar-ho");
                 System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Indiqui la posició de l'adreça que vol esborrar: " + Color.RESET + " ");
-                indexAdress = scanner.nextLine();
+                indexAdress = MyScan.getInstance().getScanner().nextLine();
             }
             this.controller.deleteAdress(client, Integer.parseInt(indexAdress));
         }
@@ -103,20 +101,19 @@ public class PantallaClientView {
         }
         System.out.println("x) Sortir");
         System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Esculli una opció:" + Color.RESET + " ");
-        Scanner scanner = new Scanner(System.in);
-        String option = scanner.nextLine().toLowerCase();
+        String option = MyScan.getInstance().getScanner().nextLine().toLowerCase();
         while (!option.equals("a") && !option.equals("x") && !option.equals("b")) {
             Notifications.errada("La opció escollida no es vàlida. Torna a intentar-ho.");
             System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Esculli una opció:" + Color.RESET + " ");
-            option = scanner.nextLine().toLowerCase();
+            option = MyScan.getInstance().getScanner().nextLine().toLowerCase();
         }
         if (option.equals("b")) {
             System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Indiqui la posició de la targeta que vol esborrar: " + Color.RESET + " ");
-            String indexTargeta = scanner.nextLine();
+            String indexTargeta = MyScan.getInstance().getScanner().nextLine();
             while (!indexTargeta.matches("\\d*") && Integer.parseInt(indexTargeta) > client.getTargetes().size()) {
                 Notifications.errada("L'index introduit no es un número vàlid. Torna a intentar-ho");
                 System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Indiqui la posició de la targeta que vol esborrar: " + Color.RESET + " ");
-                indexTargeta = scanner.nextLine();
+                indexTargeta = MyScan.getInstance().getScanner().nextLine();
             }
             this.controller.deleteTargeta(client, Integer.parseInt(indexTargeta));
         }

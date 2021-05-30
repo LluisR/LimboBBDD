@@ -4,9 +4,9 @@ import es.cc.esliceu.db.limbo.controller.PantallaEnviamentController;
 import es.cc.esliceu.db.limbo.model.Adreca;
 import es.cc.esliceu.db.limbo.model.Client;
 import es.cc.esliceu.db.limbo.util.Color;
+import es.cc.esliceu.db.limbo.util.MyScan;
 import es.cc.esliceu.db.limbo.util.Notifications;
 
-import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class PantallaEnviamentView {
@@ -45,8 +45,7 @@ public class PantallaEnviamentView {
         }
         System.out.println("x) Sortir");
         System.out.print(Color.YELLOW_BACKGROUND + "Esculli una opció: " + Color.RESET);
-        Scanner scanner = new Scanner(System.in);
-        String option = scanner.nextLine();
+        String option = MyScan.getInstance().getScanner().nextLine();
 
         while (!option.equals("a") && !option.equals("b") && !option.equals("x")) {
             if (option.matches("\\d*")) {
@@ -56,15 +55,15 @@ public class PantallaEnviamentView {
             }
             Notifications.errada("No has seleccionat una opció valida. Torna a intentar-ho.");
             System.out.print(Color.YELLOW_BACKGROUND + "Esculli una opció: " + Color.RESET);
-            option = scanner.nextLine();
+            option = MyScan.getInstance().getScanner().nextLine();
         }
         if (option.equals("b")) {
             System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Indiqui el número índex de l'adreça que vol esborrar: " + Color.RESET);
-            String deleteAdress = scanner.nextLine();
+            String deleteAdress = MyScan.getInstance().getScanner().nextLine();
             while (!deleteAdress.matches("\\d*") || Integer.parseInt(deleteAdress) >= client.getAdreces().size()) {
                 Notifications.errada("El número introduit no es vàlid. Torna a intentar-ho");
                 System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Indiqui el número índex de l'adreça que vol esborrar: " + Color.RESET);
-                deleteAdress = scanner.nextLine();
+                deleteAdress = MyScan.getInstance().getScanner().nextLine();
             }
             this.controller.deleteAdress((Adreca)client.getAdreces().toArray()[Integer.parseInt(deleteAdress)]);
         }

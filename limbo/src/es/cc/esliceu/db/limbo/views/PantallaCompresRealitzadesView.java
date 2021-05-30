@@ -3,8 +3,8 @@ package es.cc.esliceu.db.limbo.views;
 import es.cc.esliceu.db.limbo.controller.PantallaCompresRealitzadesController;
 import es.cc.esliceu.db.limbo.model.Client;
 import es.cc.esliceu.db.limbo.util.Color;
+import es.cc.esliceu.db.limbo.util.MyScan;
 
-import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class PantallaCompresRealitzadesView {
@@ -34,8 +34,7 @@ public class PantallaCompresRealitzadesView {
         }
 
         System.out.println(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Pitja qualsevol tecla per sortir" + Color.RESET + " ");
-        Scanner scanner = new Scanner(System.in);
-        scanner.nextLine();
+        MyScan.getInstance().getScanner().nextLine();
         this.controller.goBack(client);
     }
 
