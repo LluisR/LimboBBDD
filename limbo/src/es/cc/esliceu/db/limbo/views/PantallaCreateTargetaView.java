@@ -25,31 +25,41 @@ public class PantallaCreateTargetaView {
         String tipus = null;
         String numero = null;
         String dataCaducitat = null;
+        String mesCaducitat = null;
+        String anyCaducitat = null;
         String codiSeguretat = null;
-        while (option.equals("n")) {
-            System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Tipus:" + Color.RESET + " ");
+        while (option.equals("n") || option.equals("x")) {
+            System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Tipus (VISA/MASTERCARD/MAESTRO): " + Color.RESET + " ");
             tipusInitial = MyScan.getInstance().getScanner().nextLine();
             tipus = tipusInitial.substring(0,1).toUpperCase() + tipusInitial.substring(1).toLowerCase();
             while (!tipus.equals("Visa") && !tipus.equals("Mastercard") && !tipus.equals("Maestro")) {
                 Notifications.errada("Tipus de targeta incorrecte. Opcions disponibles: VISA O MASTERCARD");
-                System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Tipus (VISA/MASTERCARD):" + Color.RESET + " ");
+                System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Tipus (VISA/MASTERCARD/MAESTRO): " + Color.RESET + " ");
                 tipusInitial = MyScan.getInstance().getScanner().nextLine();
                 tipus = tipusInitial.substring(0,1).toUpperCase() + tipusInitial.substring(1).toLowerCase();
             }
             System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Numero:" + Color.RESET + " ");
             numero = MyScan.getInstance().getScanner().nextLine();
-            while(!numero.matches("\\d*")){
-                Notifications.errada("No s'ha introduit un número vàlid. Torna a intentar-ho...");
+            while(!numero.matches("^\\d{16}$")){
+                Notifications.errada("No s'ha introduit un número vàlid. Torna a intentar-ho... Recorda que han de ser 16 dígits");
                 System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Numero:" + Color.RESET + " ");
                 numero = MyScan.getInstance().getScanner().nextLine();
             }
-            System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Data de caducitat (YYYY-MM-DD):" + Color.RESET + " ");
-            dataCaducitat = MyScan.getInstance().getScanner().nextLine();
-            while (!dataCaducitat.matches("^\\d{4}\\-(0[1-9]|1[012])\\-(0[1-9]|[12][0-9]|3[01])$")) {
-                Notifications.errada("No s'ha introduit una data vàlida. Torna a intentar-ho... (YYYY-MM-DD)");
-                System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Data de caducitat (YYYY-MM-DD):" + Color.RESET + " ");
-                dataCaducitat = MyScan.getInstance().getScanner().nextLine();
+            System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Mes de caducitat" + Color.RESET + " ");
+            mesCaducitat = MyScan.getInstance().getScanner().nextLine();
+            while (!mesCaducitat.matches("^(0?[1-9]|1[012])$")) {
+                Notifications.errada("El mes introduit no es vàlid. Torna a intentar-ho (1-12)");
+                System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Mes de caducitat (2 dígits): " + Color.RESET + " ");
+                mesCaducitat = MyScan.getInstance().getScanner().nextLine();
             }
+            System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Any de caducitat (2 dígits): " + Color.RESET + " ");
+            anyCaducitat = MyScan.getInstance().getScanner().nextLine();
+            while (!anyCaducitat.matches("^\\d{2}$")) {
+                Notifications.errada("L'any introduit no es vàlid. Torna a intentar-ho (2 dígits)");
+                System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Mes de caducitat" + Color.RESET + " ");
+                anyCaducitat = MyScan.getInstance().getScanner().nextLine();
+            }
+            dataCaducitat = "20" + anyCaducitat + "-" + mesCaducitat + "-" + "01";
             System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "Codi de seguretat (3 dígits): " + Color.RESET + " ");
             codiSeguretat = MyScan.getInstance().getScanner().nextLine();
             while (!codiSeguretat.matches("^\\d{3}$")) {
@@ -65,8 +75,8 @@ public class PantallaCreateTargetaView {
             System.out.println("Data de caducitat: " + dataCaducitat);
             System.out.println("Codi de seguretat: " + codiSeguretat);
             System.out.println("--------------------------------------");
-            System.out.println("Es correcte? Si(s)/No(n)");
-            option = MyScan.getInstance().getScanner().nextLine();
+            System.out.println("Es correcte? Si(s)/No(n). Premi x per cancelar");
+            option = MyScan.getInstance().getScanner().nextLine().toLowerCase();
         }
         this.controller.saveNewTargeta(client, tipus, Long.parseLong(numero), dataCaducitat, Integer.parseInt(codiSeguretat));
         Notifications.info("Targeta afegida correctament!");

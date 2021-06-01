@@ -1,6 +1,5 @@
 package es.cc.esliceu.db.limbo.util;
 
-import java.sql.Connection;
 import java.util.Scanner;
 
 public class MyScan {
