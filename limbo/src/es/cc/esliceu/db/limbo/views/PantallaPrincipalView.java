@@ -46,10 +46,19 @@ public class PantallaPrincipalView {
         System.out.println(Color.RED_BOLD + "---------------------------------------------------------" + Color.RESET);
         System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "\t" + "Esculli una opció:" + Color.RESET + " ");
         String option = MyScan.getInstance().getScanner().nextLine().toLowerCase();
-        while (!option.equals("c") && !option.equals("v") && !option.equals("d") && !option.equals("h") && !option.equals("x")) {
+        while (!option.matches("^([0-4]{1})?$") && !option.equals("c") && !option.equals("v") && !option.equals("d") && !option.equals("h") && !option.equals("x")) {
             Notifications.errada("No s'ha seleccionat una opció valida. Torna a intentar-ho!");
             System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "\t" + "Esculli una opció:" + Color.RESET + " ");
             option = MyScan.getInstance().getScanner().nextLine();
+        }
+        if (option.matches("^([0-4]{1})?$")) {
+            System.out.print(Color.YELLOW_BACKGROUND + "" + Color.BLACK_BOLD + "\t" + "Quantes unitats vols?: " + Color.RESET + " ");
+            String unitats = MyScan.getInstance().getScanner().nextLine();
+            while (!unitats.matches("^([0-9]+)$")) {
+                Notifications.errada("Les unitats introduides no son vàlides. Torna a intentar-ho...");
+                unitats = MyScan.getInstance().getScanner().nextLine();
+            }
+            this.controller.addToCistella(option, client, productesSuggerits, unitats);
         }
         this.controller.nextPage(option, client);
     }

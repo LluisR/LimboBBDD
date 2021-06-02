@@ -3,7 +3,6 @@ package es.cc.esliceu.db.limbo.controller;
 import es.cc.esliceu.db.limbo.EnviadorEmail;
 import es.cc.esliceu.db.limbo.GeneradorHash;
 import es.cc.esliceu.db.limbo.dao.CompraDao;
-import es.cc.esliceu.db.limbo.dao.DBConnection;
 import es.cc.esliceu.db.limbo.dao.DetallCompraDao;
 import es.cc.esliceu.db.limbo.dao.impl.CompraDaoImpl;
 import es.cc.esliceu.db.limbo.dao.impl.DBConnectionImpl;

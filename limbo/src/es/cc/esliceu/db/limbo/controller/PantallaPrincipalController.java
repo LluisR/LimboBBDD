@@ -71,6 +71,18 @@ public class PantallaPrincipalController {
             case "d": PantallaClientController.getInstance().init(client); break;
             case "h": PantallaAjudaController.getInstance().init(client); break;
             case "x": PantallaInicialController.getInstance().init(); break;
+            default: this.init(client);
+        }
+    }
+
+    public void addToCistella(String option, Client client, Collection<Producte> suggestedProducts, String unitats) {
+        switch (option) {
+            case "0":
+            case "1":
+            case "2":
+            case "3":
+            case "4": PantallaCercaProductesController.getInstance().addToCistella(client, (Producte)suggestedProducts.toArray()[Integer.parseInt(option)], Integer.parseInt(unitats)); this.init(client); break;
+            default: this.init(client);
         }
     }
 
